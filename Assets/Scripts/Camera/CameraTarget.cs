@@ -12,7 +12,7 @@ public class CameraTarget : MonoBehaviour
     {
         mainCam = Camera.main;
         playerTransform = Singleton.Instance.PlayerData.Player.transform;
-    } 
+    }
 
     private void Update()
     {
