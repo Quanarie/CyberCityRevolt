@@ -21,4 +21,15 @@ public class EnemyWeapon : Weapon
             Shoot(plPos);
         }
     }
+
+    protected override void Shoot(Vector3 whereToAim)
+    {
+        if (timeElapsedFromLastShot > rechargeTime)
+        {
+            var bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity).GetComponent<Bullet>();
+            bullet.gameObject.layer = LayerMask.NameToLayer("EnemyBullet");
+            bullet.Initialize(whereToAim, damage, bulletSpeed);
+            timeElapsedFromLastShot = 0f;
+        }
+    }
 }

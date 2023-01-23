@@ -9,10 +9,10 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected Transform shootPoint;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected int damage;
-    [SerializeField] protected int bulletSpeed;
-    [SerializeField] private float rechargeTime;
+    [SerializeField] protected float bulletSpeed;
+    [SerializeField] protected float rechargeTime;
 
-    private float timeElapsedFromLastShot = 1f;
+    protected float timeElapsedFromLastShot = 1f;
 
     protected  virtual void Update()
     {
@@ -48,11 +48,6 @@ public class Weapon : MonoBehaviour
     
     protected virtual void Shoot(Vector3 whereToAim)
     {
-        if (timeElapsedFromLastShot > rechargeTime)
-        {
-            var bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity).GetComponent<Bullet>();
-            bullet.Initialize(whereToAim, damage, bulletSpeed, transform.parent.gameObject);
-            timeElapsedFromLastShot = 0f;
-        }
+        
     }
 }
