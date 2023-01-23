@@ -1,13 +1,13 @@
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyInfo))]
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float minDistanceToPlayer;
     [SerializeField] private float speed;
     
     private Rigidbody2D rb;
     private Transform playerTransform;
-    private Vector2 moveDirection;
+    private EnemyInfo info;
     
     private void Start()
     {
@@ -17,46 +17,29 @@ public class EnemyMovement : MonoBehaviour
         }
 
         playerTransform = Singleton.Instance.PlayerData.Player.transform;
+        info = GetComponent<EnemyInfo>();
     }
 
     private void FixedUpdate()
     {
-        if (Vector3.Distance(playerTransform.position, transform.position) < minDistanceToPlayer)
+        float distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
+        
+        // Do not move if enemy is too close or too far away
+        if (distanceToPlayer < info.MinDistanceToPlayer || distanceToPlayer > info.TriggerDistance)
         {
-            moveDirection = Vector2.zero;
+            info.MoveDirection = Vector2.zero;
             return;
         }
 
         // Stopping enemy when there is an obstacle on the way to player
-        if (!IsThereObstacleBetweenEnemyAndPlayer(transform.position))
+        if (!info.IsThereObstacleBetweenMeAndPlayer())
         {
-            moveDirection = playerTransform.position - transform.position;
-            rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * moveDirection.normalized);
+            info.MoveDirection = playerTransform.position - transform.position;
+            rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * info.MoveDirection .normalized);
         }
         else
         {
-            moveDirection = Vector2.zero;
+            info.MoveDirection = Vector2.zero;
         }
     }
-
-    public static bool IsThereObstacleBetweenEnemyAndPlayer(Vector3 enemyPos)
-    {
-        var plPos = Singleton.Instance.PlayerData.Player.transform.position;
-        
-        foreach (var hit in Physics2D.RaycastAll(enemyPos, plPos - enemyPos))
-        {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Collision"))
-            {
-                return true;
-            }
-            else if (hit.collider.gameObject == Singleton.Instance.PlayerData.Player)
-            {
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    public Vector2 GetMoveDirection() => moveDirection;
 }

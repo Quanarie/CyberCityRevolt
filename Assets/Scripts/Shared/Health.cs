@@ -13,6 +13,7 @@ public class Health : MonoBehaviour
     public void ReceiveDamage(int dmg)
     {
         currentHitPoints -= dmg;
+        print("received" + gameObject.name);
         if (currentHitPoints <= 0)
         {
             Death();

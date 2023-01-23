@@ -1,11 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof (EnemyMovement))]
+[RequireComponent(typeof (EnemyInfo))]
 public class EnemyAnimation : MonoBehaviour
 {
     private Animator anim;
-    private EnemyMovement movement;
-    private Vector2 moveDirection;
+    private EnemyInfo info;
     
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
@@ -18,22 +17,20 @@ public class EnemyAnimation : MonoBehaviour
             Debug.LogError("No Animator on Enemy" + gameObject.name);
         }
         
-        movement = GetComponent<EnemyMovement>();
+        info = GetComponent<EnemyInfo>();
     }
     
     private void Update()
     {
-        moveDirection = movement.GetMoveDirection();
-
-        if (moveDirection.sqrMagnitude != 0)
+        if (info.MoveDirection.sqrMagnitude != 0)
         {
-            anim.SetFloat(Horizontal, moveDirection.x);
-            anim.SetFloat(Vertical, moveDirection.y);
+            anim.SetFloat(Horizontal, info.MoveDirection.x);
+            anim.SetFloat(Vertical, info.MoveDirection.y);
         }
-        anim.SetFloat(Speed, moveDirection.sqrMagnitude);
+        anim.SetFloat(Speed, info.MoveDirection.sqrMagnitude);
 
-        if ((moveDirection.x < 0 && transform.localScale.x > 0) || 
-            (moveDirection.x > 0 && transform.localScale.x < 0))
+        if ((info.MoveDirection.x < 0 && transform.localScale.x > 0) || 
+            (info.MoveDirection.x > 0 && transform.localScale.x < 0))
         {
             var localScale = transform.localScale;
             transform.localScale = new Vector3(-localScale.x, localScale.y, localScale.z);

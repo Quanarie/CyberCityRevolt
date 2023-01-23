@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6949869697703346912}
   - component: {fileID: 6949869697703346913}
   - component: {fileID: 2946861384974149395}
+  - component: {fileID: 4880270765535502289}
   - component: {fileID: 3519497552424254443}
   - component: {fileID: 3156387888806781143}
   - component: {fileID: 6949869697703346919}
@@ -175,6 +176,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &4880270765535502289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6949869697703346916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cbc04592019c49308dd969b79572ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MoveDirection>k__BackingField: {x: 0, y: 0}
+  <MinDistanceToPlayer>k__BackingField: 3
+  <TriggerDistance>k__BackingField: 5
 --- !u!114 &3519497552424254443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDistanceToPlayer: 3
+  triggerDistance: 5
   speed: 2
 --- !u!114 &3156387888806781143
 MonoBehaviour:

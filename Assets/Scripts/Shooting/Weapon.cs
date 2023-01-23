@@ -3,7 +3,7 @@ using UnityEngine;
 // The weapon must be the child of shooter (player, enemies)
 // Every person that holds a weapon should change its scale to negative while moving to the left
 // (otherwise the rotation of the gun is messed up)
-// Prefab of weapon should be pointing to the right side 
+// Prefab of weapon should be pointing to the right side
 public class Weapon : MonoBehaviour
 {
     [SerializeField] protected Transform shootPoint;

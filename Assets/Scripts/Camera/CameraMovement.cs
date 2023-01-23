@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraTarget : MonoBehaviour
+public class CameraMovement : MonoBehaviour
 {
+    [SerializeField] private float lerpValue;
     [SerializeField] private float constraint;
     
     private Camera mainCam;
@@ -14,13 +15,13 @@ public class CameraTarget : MonoBehaviour
         playerTransform = Singleton.Instance.PlayerData.Player.transform;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         var mousePosInWorld = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         var plPos = playerTransform.position;
-        var targetPosition = new Vector3(mousePosInWorld.x, mousePosInWorld.y, 0f);
+        var targetPosition = mousePosInWorld;
         targetPosition.x = Mathf.Clamp(targetPosition.x, -constraint + plPos.x, constraint + plPos.x);
         targetPosition.y = Mathf.Clamp(targetPosition.y, -constraint + plPos.y, constraint + plPos.y);
-        transform.position = targetPosition;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, lerpValue);
     }
 }

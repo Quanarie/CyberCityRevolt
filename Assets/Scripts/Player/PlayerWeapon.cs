@@ -12,7 +12,7 @@ public class PlayerWeapon : Weapon
         
         RotateWeapon(mousePosInWorld);
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame && timeElapsedFromLastShot > rechargeTime)
         {
             Shoot(mousePosInWorld);
         }
@@ -20,12 +20,9 @@ public class PlayerWeapon : Weapon
 
     protected override void Shoot(Vector3 whereToAim)
     {
-        if (timeElapsedFromLastShot > rechargeTime)
-        {
-            var bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity).GetComponent<Bullet>();
-            bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
-            bullet.Initialize(whereToAim, damage, bulletSpeed);
-            timeElapsedFromLastShot = 0f;
-        }
+        var bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity).GetComponent<Bullet>();
+        bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
+        bullet.Initialize(whereToAim, damage, bulletSpeed);
+        timeElapsedFromLastShot = 0f;
     }
 }
