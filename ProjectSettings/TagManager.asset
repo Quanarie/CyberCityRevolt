@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - EnemyBullet
+  - PlayerBullet
+  - Collision
+  - Player
+  - Enemy
   - 
   - 
   - 
@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Behind
+    uniqueID: 1195018925
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Infront
+    uniqueID: 2980181575
     locked: 0
