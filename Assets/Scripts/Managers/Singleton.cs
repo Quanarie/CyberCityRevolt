@@ -9,6 +9,7 @@ public class Singleton : MonoBehaviour
     public static Singleton Instance { get; private set; }
     
     public PlayerData PlayerData { get; private set; }
+    public DialogueData DialogueData { get; private set; }
     
     private void Awake()
     {
@@ -20,5 +21,6 @@ public class Singleton : MonoBehaviour
         Instance = this;
         
         PlayerData = GetComponentInChildren<PlayerData>();
+        DialogueData = GetComponentInChildren<DialogueData>();
     }
 }
