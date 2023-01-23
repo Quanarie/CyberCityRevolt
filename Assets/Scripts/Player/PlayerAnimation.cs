@@ -11,7 +11,8 @@ public class PlayerAnimation : MonoBehaviour
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
     private static readonly int Speed = Animator.StringToHash("Speed");
-    
+    private static readonly int Die = Animator.StringToHash("Die");
+
     private void Start()
     {
         tf = transform;
@@ -20,6 +21,8 @@ public class PlayerAnimation : MonoBehaviour
         {
             Debug.LogError("No Animator on Player");
         }
+
+        Singleton.Instance.PlayerData.Health.Dying.AddListener(PlayDeathAnimation);
     }
     
     private void Update()
@@ -45,5 +48,11 @@ public class PlayerAnimation : MonoBehaviour
     private void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
+    }
+
+    // !! In the end of animation animator calls Respawn() in PlayerHealth script !!
+    public void PlayDeathAnimation()
+    {
+        anim.SetTrigger(Die);
     }
 }

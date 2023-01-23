@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
+    public UnityEvent Dying;
+    
     [SerializeField] protected int maxHitPoints;
     protected int currentHitPoints;
 
@@ -13,7 +16,6 @@ public class Health : MonoBehaviour
     public void ReceiveDamage(int dmg)
     {
         currentHitPoints -= dmg;
-        print("received" + gameObject.name);
         if (currentHitPoints <= 0)
         {
             Death();
@@ -22,6 +24,6 @@ public class Health : MonoBehaviour
 
     protected virtual void Death()
     {
-        
+        Dying?.Invoke();
     }
 }
