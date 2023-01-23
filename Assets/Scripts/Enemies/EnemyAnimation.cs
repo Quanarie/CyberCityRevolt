@@ -4,8 +4,8 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     private Animator anim;
-    private Transform playerTransform;
-    private float minDistToPlayer;
+    private EnemyMovement movement;
+    private Vector2 moveDirection;
     
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
@@ -18,24 +18,19 @@ public class EnemyAnimation : MonoBehaviour
             Debug.LogError("No Animator on Enemy" + gameObject.name);
         }
         
-        playerTransform = Singleton.Instance.PlayerData.Player.transform;
-        minDistToPlayer = GetComponent<EnemyMovement>().GetMinDistToPlayer();
+        movement = GetComponent<EnemyMovement>();
     }
     
     private void Update()
     {
-        Vector2 moveDirection = playerTransform.position - transform.position;
+        moveDirection = movement.GetMoveDirection();
 
-        if (Vector3.Distance(playerTransform.position, transform.position) > minDistToPlayer)
+        if (moveDirection.sqrMagnitude != 0)
         {
             anim.SetFloat(Horizontal, moveDirection.x);
             anim.SetFloat(Vertical, moveDirection.y);
-            anim.SetFloat(Speed, moveDirection.sqrMagnitude);
         }
-        else
-        {
-            anim.SetFloat(Speed, 0f);
-        }
+        anim.SetFloat(Speed, moveDirection.sqrMagnitude);
 
         if ((moveDirection.x < 0 && transform.localScale.x > 0) || 
             (moveDirection.x > 0 && transform.localScale.x < 0))

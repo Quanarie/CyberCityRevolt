@@ -15,7 +15,10 @@ public class EnemyWeapon : Weapon
         
         var plPos = playerTransform.position;
         
-        RotateWeapon(plPos);
-        Shoot(plPos);
+        if (!EnemyMovement.IsThereObstacleBetweenEnemyAndPlayer(transform.position))
+        {
+            RotateWeapon(plPos);
+            Shoot(plPos);
+        }
     }
 }
