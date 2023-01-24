@@ -3157,9 +3157,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.2}
-  m_Size: {x: 0.8, y: 0.6}
-  m_Direction: 1
+  m_Offset: {x: -0.005037561, y: 0.19196835}
+  m_Size: {x: 0.4046317, y: 0.58394176}
+  m_Direction: 0
 --- !u!114 &2093440387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3172,7 +3172,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6ee8341b481414388e61b9ffc91b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartedRolling:
+    m_PersistentCalls:
+      m_Calls: []
+  EndedRolling:
+    m_PersistentCalls:
+      m_Calls: []
   speed: 7
+  rollingSpeed: 14
+  rollRechargeTime: 1
 --- !u!114 &2093440388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3186,7 +3194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: f5ad0628778c8468793ebfc0d0b2d9b1, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 1
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -3251,6 +3259,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHitPoints: 3
+  Respawning:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &1023774759132251729
 Rigidbody2D:
   serializedVersion: 4

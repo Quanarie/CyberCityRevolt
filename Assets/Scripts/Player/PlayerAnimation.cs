@@ -12,6 +12,7 @@ public class PlayerAnimation : MonoBehaviour
     private static readonly int Vertical = Animator.StringToHash("Vertical");
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Die = Animator.StringToHash("Die");
+    private static readonly int Roll = Animator.StringToHash("Roll");
 
     private void Start()
     {
@@ -23,6 +24,7 @@ public class PlayerAnimation : MonoBehaviour
         }
 
         Singleton.Instance.PlayerData.Health.Dying.AddListener(PlayDeathAnimation);
+        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(PlayRollingAnimation);
     }
     
     private void Update()
@@ -54,5 +56,10 @@ public class PlayerAnimation : MonoBehaviour
     public void PlayDeathAnimation()
     {
         anim.SetTrigger(Die);
+    }
+    
+    public void PlayRollingAnimation()
+    {
+        anim.SetTrigger(Roll);
     }
 }
