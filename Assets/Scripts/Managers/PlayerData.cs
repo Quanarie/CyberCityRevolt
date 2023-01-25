@@ -8,6 +8,7 @@ public class PlayerData : MonoBehaviour
     public PlayerMovement Movement { get; private set; }
     public PlayerHealth Health { get; private set; }
     public SpriteRenderer Renderer { get; private set; }
+    public PlayerBlank Blank { get; private set; }
 
     private void Awake()
     {
@@ -15,5 +16,6 @@ public class PlayerData : MonoBehaviour
         Movement = Player.GetComponent<PlayerMovement>();
         Health = Player.GetComponent<PlayerHealth>();
         Renderer = Player.GetComponent<SpriteRenderer>();
+        Blank = Player.GetComponent<PlayerBlank>();
     }
 }

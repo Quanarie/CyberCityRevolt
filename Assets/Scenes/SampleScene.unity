@@ -871,11 +871,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6949869697703346918, guid: 9a88e803aca04401ea7baecc3b3e8a64, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.92
+      value: 6.039996
       objectReference: {fileID: 0}
     - target: {fileID: 6949869697703346918, guid: 9a88e803aca04401ea7baecc3b3e8a64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.89
+      value: -2.23
       objectReference: {fileID: 0}
     - target: {fileID: 6949869697703346918, guid: 9a88e803aca04401ea7baecc3b3e8a64, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3048,6 +3048,7 @@ GameObject:
   - component: {fileID: 2093440387}
   - component: {fileID: 2093440390}
   - component: {fileID: 2093440391}
+  - component: {fileID: 2093440392}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -3115,7 +3116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093440382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16, y: -0.34, z: 0}
+  m_LocalPosition: {x: 1.86, y: -1.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3262,6 +3263,23 @@ MonoBehaviour:
   Respawning:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2093440392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093440382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0917ae4ea02494d0fa5ac8183665a265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartedBlank:
+    m_PersistentCalls:
+      m_Calls: []
+  radius: 5
+  rechargeTime: 2
 --- !u!50 &1023774759132251729
 Rigidbody2D:
   serializedVersion: 4

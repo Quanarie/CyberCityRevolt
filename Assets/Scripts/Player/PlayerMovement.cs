@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError("No Rigidbody2D on Player");
         }
+        
+        Singleton.Instance.PlayerData.Blank.StartedBlank.AddListener(EndRollIfStartedBlank);
     }
 
     private void FixedUpdate()
@@ -51,11 +53,18 @@ public class PlayerMovement : MonoBehaviour
     private void OnRoll(InputValue value)
     {
         if (isRolling || timeFromLastRoll < rollRechargeTime) return;
-        
+
         StartedRolling?.Invoke();
         isRolling = true;
         rollingInput = input;
-        timeFromLastRoll = 0;
+        timeFromLastRoll = 0f;
+    }
+
+    private void EndRollIfStartedBlank()
+    {
+        if (!isRolling) return;
+        
+        EndRolling();
     }
     
     // !! Called by animator !!

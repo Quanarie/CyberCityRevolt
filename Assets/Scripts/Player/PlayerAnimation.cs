@@ -13,6 +13,7 @@ public class PlayerAnimation : MonoBehaviour
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Die = Animator.StringToHash("Die");
     private static readonly int Roll = Animator.StringToHash("Roll");
+    private static readonly int Blank = Animator.StringToHash("Blank");
 
     private void Start()
     {
@@ -23,8 +24,13 @@ public class PlayerAnimation : MonoBehaviour
             Debug.LogError("No Animator on Player");
         }
 
-        Singleton.Instance.PlayerData.Health.Dying.AddListener(PlayDeathAnimation);
-        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(PlayRollingAnimation);
+        // !! In the end of animations animator calls other methods on Player
+        // Respawn in PlayerHealth
+        Singleton.Instance.PlayerData.Health.Dying.AddListener(() => anim.SetTrigger(Die));
+        // EndRolling in PlayerMovement
+        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(() => anim.SetTrigger(Roll));
+        // EndBlanking in PlayerBlank
+        Singleton.Instance.PlayerData.Blank.StartedBlank.AddListener(() => anim.SetTrigger(Blank));
     }
     
     private void Update()
@@ -50,16 +56,5 @@ public class PlayerAnimation : MonoBehaviour
     private void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
-    }
-
-    // !! In the end of animation animator calls Respawn() in PlayerHealth script !!
-    public void PlayDeathAnimation()
-    {
-        anim.SetTrigger(Die);
-    }
-    
-    public void PlayRollingAnimation()
-    {
-        anim.SetTrigger(Roll);
     }
 }

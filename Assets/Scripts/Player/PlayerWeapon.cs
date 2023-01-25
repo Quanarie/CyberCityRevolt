@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerWeapon : Weapon
 {
-    private SpriteRenderer renderer;
+    private SpriteRenderer spriteRenderer;
     private Vector2 nonZeroInput;
     
     private void Start()
@@ -11,7 +11,7 @@ public class PlayerWeapon : Weapon
         Singleton.Instance.PlayerData.Health.Dying.AddListener(() => gameObject.SetActive(false));
         Singleton.Instance.PlayerData.Health.Respawning.AddListener(() => gameObject.SetActive(true));
 
-        if (!TryGetComponent(out renderer))
+        if (!TryGetComponent(out spriteRenderer))
         {
             Debug.LogError("No SpriteRenderer on players weapon");
         }
@@ -58,11 +58,11 @@ public class PlayerWeapon : Weapon
         
         if (nonZeroInput == Vector2.up)
         {
-            renderer.sortingOrder = Singleton.Instance.PlayerData.Renderer.sortingOrder - 1;
+            spriteRenderer.sortingOrder = Singleton.Instance.PlayerData.Renderer.sortingOrder - 1;
         }
         else
         {
-            renderer.sortingOrder = Singleton.Instance.PlayerData.Renderer.sortingOrder + 1;
+            spriteRenderer.sortingOrder = Singleton.Instance.PlayerData.Renderer.sortingOrder + 1;
         }
     }
 }
