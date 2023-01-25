@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MinDistanceToPlayer>k__BackingField: 2
-  <TriggerDistance>k__BackingField: 5
+  <TriggerDistance>k__BackingField: 4
 --- !u!114 &3519497552424254443
 MonoBehaviour:
   m_ObjectHideFlags: 0
