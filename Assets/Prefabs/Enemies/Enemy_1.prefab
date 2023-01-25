@@ -188,9 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cbc04592019c49308dd969b79572ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MoveDirection>k__BackingField: {x: 0, y: 0}
-  <MinDistanceToPlayer>k__BackingField: 3
-  <TriggerDistance>k__BackingField: 5
+  <MinDistanceToPlayer>k__BackingField: 2
+  <TriggerDistance>k__BackingField: 4
 --- !u!114 &3519497552424254443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,9 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2385c0d2c964da8ab61563a008628a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistanceToPlayer: 3
-  triggerDistance: 5
   speed: 2
+  minDistanceToOtherEnemies: 0.25
 --- !u!114 &3156387888806781143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9864af2cc76343a79efa2c10088a729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Dying:
+    m_PersistentCalls:
+      m_Calls: []
   maxHitPoints: 5
 --- !u!1001 &6626321065510389613
 PrefabInstance:

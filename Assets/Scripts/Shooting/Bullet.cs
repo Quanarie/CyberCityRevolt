@@ -25,6 +25,11 @@ public class Bullet : MonoBehaviour
             target.ReceiveDamage(damage);
         }
         
+        DestroyBullet();
+    }
+    
+    public void DestroyBullet()
+    {
         Destroy(gameObject);
     }
 }
