@@ -1,27 +1,43 @@
 using UnityEngine;
 
-// The weapon must be the child of shooter (player, enemies)
-// Every person that holds a weapon should change its scale to negative while moving to the left
-// (otherwise the rotation of the gun is messed up)
-// Prefab of weapon should be pointing to the right side
-public class Weapon : MonoBehaviour
+/// <summary>
+/// The weapon must be the child of shooter (player, enemies).
+/// Every person that holds a weapon should change its scale to negative while moving to the left
+/// (otherwise the rotation of the gun is messed up).
+/// Prefab of weapon should be pointing to the right side.
+/// </summary> 
+public abstract class Weapon : MonoBehaviour
 {
     [SerializeField] protected Transform shootPoint;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected int damage;
     [SerializeField] protected float bulletSpeed;
-    [SerializeField] protected float rechargeTime;
+    [SerializeField] private float rechargeTime;
 
-    protected float timeElapsedFromLastShot = 1f;
-
-    protected  virtual void Update()
+    private float timeElapsedFromLastShot = 1f;
+    protected Bullet[] spawnedBullets;
+    protected WeaponInput input;
+    private bool isOnPlayer;
+    
+    private void Start()
     {
-        timeElapsedFromLastShot += Time.deltaTime;
+        if (!transform.parent.TryGetComponent(out input))
+        {
+            Debug.LogError("No WeaponInput on: " + transform.parent.name);
+        }
+        input.Shoot.AddListener(ShootContainer);
+        isOnPlayer = transform.parent.TryGetComponent<PlayerMovement>(out _);
     }
 
-    protected virtual void RotateWeapon(Vector3 whereToAim)
+    private void Update()
     {
-        var weaponPos = transform.position;
+        timeElapsedFromLastShot += Time.deltaTime;
+        RotateWeapon(input.GetTarget());
+    }
+
+    private void RotateWeapon(Vector2 whereToAim)
+    {
+        var weaponPos = (Vector2)transform.position;
         var aimDirection = whereToAim - weaponPos;
         var aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
 
@@ -46,8 +62,52 @@ public class Weapon : MonoBehaviour
         transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
     }
     
-    protected virtual void Shoot(Vector3 whereToAim)
+    private void ShootContainer(Vector2 whereToAim)
     {
+        if (timeElapsedFromLastShot < rechargeTime) return;
         
+        Shoot(whereToAim);
+        LayerBullets();
+        OrientBullets();
+        timeElapsedFromLastShot = 0;
+    }
+    
+    /// <summary> Child must stack all bullets that it spawns is SpawnedBullets array </summary> 
+    protected abstract void Shoot(Vector2 whereToAim);
+    
+    private void LayerBullets()
+    {
+        if (spawnedBullets == null) return;
+        
+        foreach (var bullet in spawnedBullets)
+        {
+            if (isOnPlayer)
+            {
+                bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
+            }
+            else
+            {
+                bullet.gameObject.layer = LayerMask.NameToLayer("EnemyBullet");
+            }
+        }
+    }
+
+    private void OrientBullets()
+    {
+        if (spawnedBullets == null) return;
+        
+        foreach (var bullet in spawnedBullets)
+        {
+            var aimDirection = bullet.GetComponent<Rigidbody2D>().velocity;
+            var aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
+            
+            var rot = bullet.transform.rotation.eulerAngles;
+            bullet.transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
+
+            if (aimDirection.x > 0f) continue;
+            
+            var bScale = bullet.transform.localScale;
+            bullet.transform.localScale = new Vector3(-Mathf.Abs(bScale.x), bScale.y, bScale.z);
+        }
     }
 }

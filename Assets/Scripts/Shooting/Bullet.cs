@@ -7,14 +7,14 @@ public class Bullet : MonoBehaviour
 
     private Health target;
 
-    public void Initialize(Vector3 targetPoint, int dmg, float speed)
+    public void Initialize(Vector2 targetPoint, int dmg, float speed)
     {
         if (!TryGetComponent(out rb))
         {
             Debug.LogError("No Rigidbody2D on bullet: " + gameObject.name);
         }
         
-        rb.velocity = (targetPoint - transform.position).normalized * speed;
+        rb.velocity = ((Vector3)targetPoint - transform.position).normalized * speed;
         damage = dmg;
     }
 
