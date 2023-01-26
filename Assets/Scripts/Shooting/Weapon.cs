@@ -25,8 +25,10 @@ public abstract class Weapon : MonoBehaviour
         {
             Debug.LogError("No WeaponInput on: " + transform.parent.name);
         }
+        
         input.Shoot.AddListener(ShootContainer);
         isOnPlayer = transform.parent.TryGetComponent<PlayerMovement>(out _);
+
     }
 
     private void Update()
@@ -37,8 +39,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void RotateWeapon(Vector2 whereToAim)
     {
-        var weaponPos = (Vector2)transform.position;
-        var aimDirection = whereToAim - weaponPos;
+        var aimDirection = whereToAim - (Vector2)transform.position;
         var aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
 
         var thisTransform = transform;
@@ -67,7 +68,7 @@ public abstract class Weapon : MonoBehaviour
         if (timeElapsedFromLastShot < rechargeTime) return;
         
         Shoot(whereToAim);
-        LayerBullets();
+        SetLayerBullets();
         OrientBullets();
         timeElapsedFromLastShot = 0;
     }
@@ -75,7 +76,7 @@ public abstract class Weapon : MonoBehaviour
     /// <summary> Child must stack all bullets that it spawns is SpawnedBullets array </summary> 
     protected abstract void Shoot(Vector2 whereToAim);
     
-    private void LayerBullets()
+    protected void SetLayerBullets()
     {
         if (spawnedBullets == null) return;
         
