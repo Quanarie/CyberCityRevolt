@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     
     private Vector2 input;
+    private Vector2 nonZeroInput;
     private Vector2 rollingInput;
     private bool isRolling;
     
@@ -48,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
     private void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
+        
+        if (input == Vector2.zero) return;
+        
+        nonZeroInput = input;
     }
     
     private void OnRoll(InputValue value)
@@ -56,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         StartedRolling?.Invoke();
         isRolling = true;
-        rollingInput = input;
+        rollingInput = nonZeroInput;
         timeFromLastRoll = 0f;
     }
 

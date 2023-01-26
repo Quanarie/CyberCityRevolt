@@ -38,7 +38,8 @@ public class PlayerBlank : MonoBehaviour
         foreach (var col in Physics2D.OverlapCircleAll(transform.position, radius))
         {
             Bullet bullet = null;
-            if (!col.TryGetComponent(out bullet)) continue;
+            if (!col.TryGetComponent(out bullet) || 
+                col.gameObject.layer != LayerMask.NameToLayer("EnemyBullet")) continue;
             
             bullet.DestroyBullet();
         }

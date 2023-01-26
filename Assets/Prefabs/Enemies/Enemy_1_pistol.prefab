@@ -232,9 +232,6 @@ MonoBehaviour:
   Dying:
     m_PersistentCalls:
       m_Calls: []
-  GotHurt:
-    m_PersistentCalls:
-      m_Calls: []
   maxHitPoints: 5
 --- !u!114 &76638432355760261
 MonoBehaviour:
@@ -305,10 +302,6 @@ PrefabInstance:
     - target: {fileID: 759940601442828097, guid: 423cc4633da47477086161747b98bfd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 759940601442828102, guid: 423cc4633da47477086161747b98bfd1, type: 3}
-      propertyPath: bulletSpeed
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 423cc4633da47477086161747b98bfd1, type: 3}

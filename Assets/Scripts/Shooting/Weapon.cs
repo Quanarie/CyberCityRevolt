@@ -18,7 +18,7 @@ public abstract class Weapon : MonoBehaviour
     protected Bullet[] spawnedBullets;
     protected WeaponInput input;
     private bool isOnPlayer;
-    
+
     private void Start()
     {
         if (!transform.parent.TryGetComponent(out input))
@@ -28,12 +28,12 @@ public abstract class Weapon : MonoBehaviour
         
         input.Shoot.AddListener(ShootContainer);
         isOnPlayer = transform.parent.TryGetComponent<PlayerMovement>(out _);
-
     }
-
-    private void Update()
+    
+    // FixedUpdate is stopped by setting Time.timeScale to 0f, unlike Update()
+    private void FixedUpdate()
     {
-        timeElapsedFromLastShot += Time.deltaTime;
+        timeElapsedFromLastShot += Time.fixedDeltaTime;
         RotateWeapon(input.GetTarget());
     }
 

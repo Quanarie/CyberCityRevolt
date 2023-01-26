@@ -5,7 +5,6 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     [HideInInspector] public UnityEvent Dying;
-    [HideInInspector] public UnityEvent GotHurt;
     
     [SerializeField] protected int maxHitPoints;
     

@@ -3,8 +3,6 @@ using UnityEngine.Events;
 
 public class PlayerHealth : Health
 {
-    [HideInInspector] public UnityEvent Respawning;
-    
     private bool isDying = false;
     private bool isInvincible = false;
 
@@ -35,7 +33,6 @@ public class PlayerHealth : Health
     public void Respawn()
     {
         Singleton.Instance.PlayerData.Input.ActivateInput();
-        Respawning?.Invoke();
         transform.position = Vector3.zero;
         currentHitPoints = maxHitPoints;
         isDying = false;
