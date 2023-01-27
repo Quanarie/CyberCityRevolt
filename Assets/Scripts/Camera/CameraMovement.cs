@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,14 +6,17 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private float smoothTime;
     [SerializeField] private float constraint;
+    [SerializeField] private float cameraShakeDuration;
+    [SerializeField] private float cameraShakeMagnitude;
 
     private Camera mainCam;
     private Transform playerTransform;
-
+    
     private void Start()
     {
         mainCam = Camera.main;
         playerTransform = Singleton.Instance.PlayerData.Player.transform;
+        Singleton.Instance.PlayerData.Weapon.Shot.AddListener(() => StartCoroutine(Shake()));
     }
 
     // FixedUpdate is stopped by setting Time.timeScale to 0f, unlike Update()
@@ -26,5 +30,22 @@ public class CameraMovement : MonoBehaviour
         var vel = Vector3.zero;
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, 
             ref vel, smoothTime);
+    }
+
+    public IEnumerator Shake()
+    {
+        Vector3 orignalPosition = transform.position;
+        float elapsed = 0f;
+        
+        while (elapsed < cameraShakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * cameraShakeMagnitude + orignalPosition.x;
+            float y = Random.Range(-1f, 1f) * cameraShakeMagnitude + orignalPosition.y;
+
+            transform.position = new Vector3(x, y, orignalPosition.z);
+            elapsed += Time.deltaTime;
+            yield return 0;
+        }
+        transform.position = orignalPosition;
     }
 }

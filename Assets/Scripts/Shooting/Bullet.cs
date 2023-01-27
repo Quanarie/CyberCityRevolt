@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private GameObject destroyParticles;
+    
     private Rigidbody2D rb;
     private int damage;
-
+    
     private Health target;
 
     public void Initialize(Vector2 targetPoint, int dmg, float speed)
@@ -30,6 +32,7 @@ public class Bullet : MonoBehaviour
     
     public void DestroyBullet()
     {
+        Instantiate(destroyParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

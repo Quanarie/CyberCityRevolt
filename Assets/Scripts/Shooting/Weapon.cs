@@ -1,19 +1,22 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// The weapon must be the child of shooter (player, enemies).
 /// Every person that holds a weapon should change its scale to negative while moving to the left
 /// (otherwise the rotation of the gun is messed up).
 /// Prefab of weapon should be pointing to the right side.
-/// </summary> 
+/// </summary>
 public abstract class Weapon : MonoBehaviour
 {
+    public UnityEvent Shot;
+    
     [SerializeField] protected Transform shootPoint;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected int damage;
     [SerializeField] protected float bulletSpeed;
     [SerializeField] private float rechargeTime;
-
+    
     private float timeElapsedFromLastShot = 1f;
     protected Bullet[] spawnedBullets;
     protected WeaponInput input;
@@ -68,6 +71,7 @@ public abstract class Weapon : MonoBehaviour
         if (timeElapsedFromLastShot < rechargeTime) return;
         
         Shoot(whereToAim);
+        Shot?.Invoke();
         SetLayerBullets();
         OrientBullets();
         timeElapsedFromLastShot = 0;

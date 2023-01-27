@@ -1447,6 +1447,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.1
   constraint: 1.5
+  cameraShakeDuration: 0.1
+  cameraShakeMagnitude: 0.1
 --- !u!1 &524832068
 GameObject:
   m_ObjectHideFlags: 0
