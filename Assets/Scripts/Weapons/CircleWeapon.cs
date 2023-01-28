@@ -7,7 +7,7 @@ public class CircleWeapon : Weapon
 
     protected override void Shoot(Vector2 whereToAim)
     {
-        Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(whereToAim, info, transform.position, 
+        Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(whereToAim, info, 
             bulletQuantity, spreadAngle, out spawnedBullets);
     }
 }

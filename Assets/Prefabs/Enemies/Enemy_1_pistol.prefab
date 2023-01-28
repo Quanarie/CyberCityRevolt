@@ -303,14 +303,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 759940601442828102, guid: 423cc4633da47477086161747b98bfd1, type: 3}
-      propertyPath: camShakeDur
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 759940601442828102, guid: 423cc4633da47477086161747b98bfd1, type: 3}
-      propertyPath: camShakeMagn
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 423cc4633da47477086161747b98bfd1, type: 3}
 --- !u!4 &836437857562515346 stripped

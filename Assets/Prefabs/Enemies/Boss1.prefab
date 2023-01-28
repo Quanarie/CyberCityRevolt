@@ -31,7 +31,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2485637898149574737}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.2, y: -0.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -198,9 +198,6 @@ MonoBehaviour:
   Dying:
     m_PersistentCalls:
       m_Calls: []
-  GotHurt:
-    m_PersistentCalls:
-      m_Calls: []
   maxHitPoints: 20
 --- !u!114 &2485637898149574831
 MonoBehaviour:
@@ -227,8 +224,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2951295423206315960}
   - component: {fileID: 2951295423206315966}
+  - component: {fileID: 378506328789831278}
   - component: {fileID: 2951295421853216194}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Boss1Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +289,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d7a2eee60d84c412fb7031ffe284faee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -303,6 +301,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &378506328789831278
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2951295421853216195}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.27392554
 --- !u!114 &2951295421853216194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,14 +329,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cb889224aa4c4dbfd379d5a0ac809b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootPoint: {fileID: 2951295422348335147}
-  bulletPrefab: {fileID: 1584635873586827209, guid: e3083207108724b9eaff832f46dda50e, type: 3}
-  damage: 1
-  bulletSpeed: 3
-  rechargeTime: 3
+  info:
+    shootPoint: {fileID: 2951295422348335147}
+    bulletPrefab: {fileID: 1584635873586827209, guid: e3083207108724b9eaff832f46dda50e, type: 3}
+    damage: 1
+    bulletSpeed: 3
+    rechargeTime: 4
   minBulletsQuantityInOnCircle: 4
   maxBulletsQuantityInOnCircle: 20
-  quantityOfCircles: 6
+  quantityOfCircles: 5
   delayBetweenCircles: 0.3
 --- !u!1 &2951295422348335146
 GameObject:
@@ -333,7 +348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2951295422348335147}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

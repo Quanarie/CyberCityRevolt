@@ -255,14 +255,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 363133185075460609}
     m_Modifications:
-    - target: {fileID: -5701370596225827384, guid: 07055c14dd17d4dd3b3f2a6ad4619ba6, type: 3}
-      propertyPath: camShakeDur
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -5701370596225827384, guid: 07055c14dd17d4dd3b3f2a6ad4619ba6, type: 3}
-      propertyPath: camShakeMagn
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 759940600091608378, guid: 07055c14dd17d4dd3b3f2a6ad4619ba6, type: 3}
       propertyPath: m_Name
       value: Shotgun

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// The weapon must be the child of shooter (player, enemies).
@@ -10,7 +9,7 @@ using UnityEngine.Events;
 /// </summary>
 public abstract class Weapon : MonoBehaviour
 {
-    private CameraMovement cam;
+    protected CameraMovement cam;
     
     [SerializeField] protected WeaponInfo info;
     
@@ -107,7 +106,7 @@ public abstract class Weapon : MonoBehaviour
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
         Shoot(whereToAim);
-        if (isOnPlayer) cam.Shake();
+        if (isOnPlayer) cam.Shake();    // :(
         SetLayerBullets();
         OrientBullets();
         timeElapsedFromLastShot = 0;

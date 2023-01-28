@@ -15,16 +15,21 @@ public class Boss1Weapon : Weapon
     {
         StartCoroutine(SpawnWithDelay(whereToAim));
     }
-
+    
     IEnumerator SpawnWithDelay(Vector2 target)
     {
         for (int i = 0; i < quantityOfCircles; i++)
         {
             var randQuantityOfBullets = Random.Range(minBulletsQuantityInOnCircle, maxBulletsQuantityInOnCircle);
-            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(target, info, transform.position,
+            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(target, info, 
                 randQuantityOfBullets, 360f, out spawnedBullets);
             SetLayerBullets();
             yield return new WaitForSeconds(delayBetweenCircles);
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }
