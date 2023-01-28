@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerWeaponHandler : MonoBehaviour
 {
+    [HideInInspector] public UnityEvent ChangedWeapon;
+
     [SerializeField] private Vector2 weaponOffset;
     
     private const float PICKUP_DISTANCE = 0.5f;
@@ -33,6 +36,7 @@ public class PlayerWeaponHandler : MonoBehaviour
         closestWeapon.transform.localPosition = weaponOffset;
         var weaponComponent = closestWeapon.GetComponent<Weapon>();
         weaponComponent.PickupWeapon(transform);
+        ChangedWeapon?.Invoke();
     }
     
     private void SortWeaponsByDistance(ref Collider2D[] arr)

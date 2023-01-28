@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// The weapon must be the child of shooter (player, enemies).
@@ -9,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public abstract class Weapon : MonoBehaviour
 {
+    [HideInInspector] public UnityEvent Shot;
+
     protected CameraMovement cam;
     [SerializeField] protected float cameraShakeDuration;
     [SerializeField] protected float cameraShakeMagnitude;
@@ -21,7 +24,9 @@ public abstract class Weapon : MonoBehaviour
     protected bool isOnPlayer;
 
     public bool isDropped { get; set; }
-
+    public float GetRechargeTime() => info.rechargeTime;
+    public float GetElapsedTime() => timeElapsedFromLastShot;
+    
     private void Start()
     {
         if (!transform.parent.TryGetComponent(out input))
