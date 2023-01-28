@@ -36,5 +36,6 @@ public class PlayerHealth : Health
         transform.position = Vector3.zero;
         currentHitPoints = maxHitPoints;
         isDying = false;
+        ChangedHp?.Invoke(currentHitPoints);
     }
 }

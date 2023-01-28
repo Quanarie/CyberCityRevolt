@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     [HideInInspector] public UnityEvent Dying;
+    [HideInInspector] public UnityEvent<int> ChangedHp;
     
     [SerializeField] protected int maxHitPoints;
     
@@ -39,6 +40,8 @@ public class Health : MonoBehaviour
         {
             Death();
         }
+
+        ChangedHp?.Invoke(currentHitPoints);
         StartCoroutine(BlinkWhenHurt());
     }
 
@@ -54,4 +57,6 @@ public class Health : MonoBehaviour
     {
         Dying?.Invoke();
     }
+
+    public int GetMaxHp() => maxHitPoints;
 }
