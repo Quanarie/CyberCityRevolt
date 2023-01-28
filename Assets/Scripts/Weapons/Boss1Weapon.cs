@@ -11,12 +11,27 @@ public class Boss1Weapon : Weapon
     [SerializeField] private int quantityOfCircles;
     [SerializeField] private float delayBetweenCircles;
 
-    protected override void Shoot(Vector2 whereToAim)
+    protected override void ShootContainer(Vector2 whereToAim)
     {
-        StartCoroutine(SpawnWithDelay(whereToAim));
+        if (timeElapsedFromLastShot < info.rechargeTime) return;
+        
+        Shoot(whereToAim);
     }
     
-    IEnumerator SpawnWithDelay(Vector2 target)
+    public override void DropWeapon()
+    {
+        StopAllCoroutines();
+        transform.SetParent(null);
+        input.Shoot.RemoveListener(ShootContainer);
+        isDropped = true;
+    }
+    
+    protected override void Shoot(Vector2 whereToAim)
+    {
+        StartCoroutine(SpawnCirclesWithDelay(whereToAim));
+    }
+
+    IEnumerator SpawnCirclesWithDelay(Vector2 target)
     {
         for (int i = 0; i < quantityOfCircles; i++)
         {
@@ -24,12 +39,10 @@ public class Boss1Weapon : Weapon
             Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(target, info, 
                 randQuantityOfBullets, 360f, out spawnedBullets);
             SetLayerBullets();
+            OrientBullets();
+            if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
+            timeElapsedFromLastShot = 0f;
             yield return new WaitForSeconds(delayBetweenCircles);
         }
-    }
-
-    private void OnDestroy()
-    {
-        StopAllCoroutines();
     }
 }

@@ -6,8 +6,6 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private float smoothTime;
     [SerializeField] private float constraint;
-    [SerializeField] private float cameraShakeDuration;
-    [SerializeField] private float cameraShakeMagnitude;
 
     private Camera mainCam;
     private Transform playerTransform;
@@ -31,17 +29,17 @@ public class CameraMovement : MonoBehaviour
             ref vel, smoothTime);
     }
 
-    public void Shake() => StartCoroutine(ShakeCor());
+    public void Shake(float dur, float magn) => StartCoroutine(ShakeCor(dur, magn));
 
-    private IEnumerator ShakeCor()
+    private IEnumerator ShakeCor(float dur, float magn)
     {
         Vector3 orignalPosition = transform.position;
         float elapsed = 0f;
         
-        while (elapsed < cameraShakeDuration)
+        while (elapsed < dur)
         {
-            float x = Random.Range(-1f, 1f) * cameraShakeMagnitude + orignalPosition.x;
-            float y = Random.Range(-1f, 1f) * cameraShakeMagnitude + orignalPosition.y;
+            float x = Random.Range(-1f, 1f) * magn + orignalPosition.x;
+            float y = Random.Range(-1f, 1f) * magn + orignalPosition.y;
 
             transform.position = new Vector3(x, y, orignalPosition.z);
             elapsed += Time.deltaTime;

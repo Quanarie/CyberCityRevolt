@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2485637898149574737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.2, y: -0.44, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -329,16 +329,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cb889224aa4c4dbfd379d5a0ac809b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraShakeDuration: 0.05
+  cameraShakeMagnitude: 0.05
   info:
     shootPoint: {fileID: 2951295422348335147}
     bulletPrefab: {fileID: 1584635873586827209, guid: e3083207108724b9eaff832f46dda50e, type: 3}
     damage: 1
     bulletSpeed: 3
-    rechargeTime: 4
+    rechargeTime: 5
   minBulletsQuantityInOnCircle: 4
   maxBulletsQuantityInOnCircle: 20
-  quantityOfCircles: 5
-  delayBetweenCircles: 0.3
+  quantityOfCircles: 8
+  delayBetweenCircles: 0.5
 --- !u!1 &2951295422348335146
 GameObject:
   m_ObjectHideFlags: 0

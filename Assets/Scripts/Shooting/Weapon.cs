@@ -10,13 +10,15 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     protected CameraMovement cam;
+    [SerializeField] protected float cameraShakeDuration;
+    [SerializeField] protected float cameraShakeMagnitude;
     
     [SerializeField] protected WeaponInfo info;
     
-    private float timeElapsedFromLastShot = 1f;
+    protected float timeElapsedFromLastShot = 0f;
     protected Bullet[] spawnedBullets;
     protected WeaponInput input;
-    private bool isOnPlayer;
+    protected bool isOnPlayer;
 
     public bool isDropped { get; set; }
 
@@ -45,7 +47,7 @@ public abstract class Weapon : MonoBehaviour
         health.Dying.AddListener(DropWeapon);
     }
 
-    public void DropWeapon()
+    public virtual void DropWeapon()
     {
         transform.SetParent(null);
         input.Shoot.RemoveListener(ShootContainer);
@@ -101,12 +103,12 @@ public abstract class Weapon : MonoBehaviour
         transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
     }
     
-    private void ShootContainer(Vector2 whereToAim)
+    protected virtual void ShootContainer(Vector2 whereToAim)
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
         Shoot(whereToAim);
-        if (isOnPlayer) cam.Shake();    // :(
+        if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
         SetLayerBullets();
         OrientBullets();
         timeElapsedFromLastShot = 0;
@@ -132,7 +134,7 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    private void OrientBullets()
+    protected void OrientBullets()
     {
         if (spawnedBullets == null) return;
         
