@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // New Unity input system (calls this when WASD pressed)
-    private void OnMove(InputValue value)
+    public void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
         
@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         nonZeroInput = input;
     }
     
-    private void OnRoll(InputValue value)
+    public void OnRoll(InputValue value)
     {
         if (isRolling || timeFromLastRoll < rollRechargeTime) return;
 
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
     }
     
     // !! Called by animator !!
-    private void EndRolling()
+    public void EndRolling()
     {
         isRolling = false;
         EndedRolling?.Invoke();

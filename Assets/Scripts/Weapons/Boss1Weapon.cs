@@ -21,8 +21,8 @@ public class Boss1Weapon : Weapon
         for (int i = 0; i < quantityOfCircles; i++)
         {
             var randQuantityOfBullets = Random.Range(minBulletsQuantityInOnCircle, maxBulletsQuantityInOnCircle);
-            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(target, bulletPrefab, damage, bulletSpeed, 
-                shootPoint.position, randQuantityOfBullets, 360f, out spawnedBullets);
+            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(target, info, transform.position,
+                randQuantityOfBullets, 360f, out spawnedBullets);
             SetLayerBullets();
             yield return new WaitForSeconds(delayBetweenCircles);
         }

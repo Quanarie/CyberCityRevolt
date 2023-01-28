@@ -53,7 +53,7 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
     
-    private void OnMove(InputValue value)
+    public void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
     }

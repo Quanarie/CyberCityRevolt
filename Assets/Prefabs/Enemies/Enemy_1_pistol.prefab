@@ -232,7 +232,7 @@ MonoBehaviour:
   Dying:
     m_PersistentCalls:
       m_Calls: []
-  maxHitPoints: 5
+  maxHitPoints: 1
 --- !u!114 &76638432355760261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +301,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 759940601442828097, guid: 423cc4633da47477086161747b98bfd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759940601442828102, guid: 423cc4633da47477086161747b98bfd1, type: 3}
+      propertyPath: camShakeDur
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759940601442828102, guid: 423cc4633da47477086161747b98bfd1, type: 3}
+      propertyPath: camShakeMagn
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

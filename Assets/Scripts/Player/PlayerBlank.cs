@@ -23,7 +23,7 @@ public class PlayerBlank : MonoBehaviour
         timeFromLastBlank += Time.deltaTime;
     }
 
-    private void OnBlank(InputValue value)
+    public void OnBlank(InputValue value)
     {
         if (isBlanking || timeFromLastBlank < rechargeTime) return;
 
@@ -35,11 +35,10 @@ public class PlayerBlank : MonoBehaviour
     
     private void DestroyAllBulletsWithinRadius()
     {
-        foreach (var col in Physics2D.OverlapCircleAll(transform.position, radius))
+        foreach (var col in Physics2D.OverlapCircleAll(transform.position, 
+                     radius, LayerMask.GetMask("EnemyBullet")))
         {
-            Bullet bullet = null;
-            if (!col.TryGetComponent(out bullet) || 
-                col.gameObject.layer != LayerMask.NameToLayer("EnemyBullet")) continue;
+            if (!col.TryGetComponent(out Bullet bullet)) continue;
             
             bullet.DestroyBullet();
         }
@@ -53,5 +52,5 @@ public class PlayerBlank : MonoBehaviour
     }
 
     // !! Called by animator !!
-    private void EndBlanking() => isBlanking = false;
+    public void EndBlanking() => isBlanking = false;
 }

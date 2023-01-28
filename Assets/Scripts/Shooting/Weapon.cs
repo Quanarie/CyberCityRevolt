@@ -6,21 +6,20 @@ using UnityEngine.Events;
 /// Every person that holds a weapon should change its scale to negative while moving to the left
 /// (otherwise the rotation of the gun is messed up).
 /// Prefab of weapon should be pointing to the right side.
+/// Any weapon should be on weapon layer
 /// </summary>
 public abstract class Weapon : MonoBehaviour
 {
-    public UnityEvent Shot;
+    private CameraMovement cam;
     
-    [SerializeField] protected Transform shootPoint;
-    [SerializeField] protected GameObject bulletPrefab;
-    [SerializeField] protected int damage;
-    [SerializeField] protected float bulletSpeed;
-    [SerializeField] private float rechargeTime;
+    [SerializeField] protected WeaponInfo info;
     
     private float timeElapsedFromLastShot = 1f;
     protected Bullet[] spawnedBullets;
     protected WeaponInput input;
     private bool isOnPlayer;
+
+    public bool isDropped { get; set; }
 
     private void Start()
     {
@@ -31,11 +30,48 @@ public abstract class Weapon : MonoBehaviour
         
         input.Shoot.AddListener(ShootContainer);
         isOnPlayer = transform.parent.TryGetComponent<PlayerMovement>(out _);
+        
+        if (!Camera.main.TryGetComponent(out cam))
+        {
+            Debug.LogError("No CameraMovement on Camera.main");
+        }
+
+        if (isOnPlayer) return;
+        
+        if (!transform.parent.TryGetComponent(out Health health))
+        {
+            Debug.LogError("No Health on weapons parent: " + transform.parent.name);
+        }
+
+        health.Dying.AddListener(DropWeapon);
+    }
+
+    public void DropWeapon()
+    {
+        transform.SetParent(null);
+        input.Shoot.RemoveListener(ShootContainer);
+        isDropped = true;
     }
     
+    public void PickupWeapon(Transform parent)
+    {
+        transform.SetParent(parent);
+        isDropped = false;
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        var weaponScale = transform.localScale;
+        transform.localScale = new Vector3(Mathf.Abs(weaponScale.x), weaponScale.y, weaponScale.z);
+        Start();
+    }
+
     // FixedUpdate is stopped by setting Time.timeScale to 0f, unlike Update()
     private void FixedUpdate()
     {
+        if (isDropped) return;
+        
         timeElapsedFromLastShot += Time.fixedDeltaTime;
         RotateWeapon(input.GetTarget());
     }
@@ -68,15 +104,15 @@ public abstract class Weapon : MonoBehaviour
     
     private void ShootContainer(Vector2 whereToAim)
     {
-        if (timeElapsedFromLastShot < rechargeTime) return;
+        if (timeElapsedFromLastShot < info.rechargeTime) return;
         
         Shoot(whereToAim);
-        Shot?.Invoke();
+        if (isOnPlayer) cam.Shake();
         SetLayerBullets();
         OrientBullets();
         timeElapsedFromLastShot = 0;
     }
-    
+
     /// <summary> Child must stack all bullets that it spawns is SpawnedBullets array </summary> 
     protected abstract void Shoot(Vector2 whereToAim);
     

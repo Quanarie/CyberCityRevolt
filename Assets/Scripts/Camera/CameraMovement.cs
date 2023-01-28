@@ -16,7 +16,6 @@ public class CameraMovement : MonoBehaviour
     {
         mainCam = Camera.main;
         playerTransform = Singleton.Instance.PlayerData.Player.transform;
-        Singleton.Instance.PlayerData.Weapon.Shot.AddListener(() => StartCoroutine(Shake()));
     }
 
     // FixedUpdate is stopped by setting Time.timeScale to 0f, unlike Update()
@@ -32,7 +31,9 @@ public class CameraMovement : MonoBehaviour
             ref vel, smoothTime);
     }
 
-    public IEnumerator Shake()
+    public void Shake() => StartCoroutine(ShakeCor());
+
+    private IEnumerator ShakeCor()
     {
         Vector3 orignalPosition = transform.position;
         float elapsed = 0f;
