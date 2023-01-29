@@ -1,36 +1,39 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private Transform tf;
-    private Animator anim;
+    public static readonly UnityEvent FlippedSide = new();
+    
+    private Transform _tf;
+    private Animator _anim;
     
     private Vector2 input;
     
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
     private static readonly int Speed = Animator.StringToHash("Speed");
-    private static readonly int Die = Animator.StringToHash("Die");
     private static readonly int Roll = Animator.StringToHash("Roll");
     private static readonly int Blank = Animator.StringToHash("Blank");
+    private static readonly int Die = Animator.StringToHash("Die");
 
     private void Start()
     {
-        tf = transform;
+        _tf = transform;
         
-        if (!TryGetComponent(out anim))
+        if (!TryGetComponent(out _anim))
         {
             Debug.LogError("No Animator on Player");
         }
 
         // !! In the end of animations animator calls other methods on Player
         // Respawn in PlayerHealth
-        Singleton.Instance.PlayerData.Health.Dying.AddListener(() => anim.SetTrigger(Die));
+        Singleton.Instance.PlayerData.Health.Dying.AddListener(() => _anim.SetTrigger(Die));
         // EndRolling in PlayerMovement
-        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(() => anim.SetTrigger(Roll));
+        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(() => _anim.SetTrigger(Roll));
         // EndBlanking in PlayerBlank
-        Singleton.Instance.PlayerData.Blank.StartedBlank.AddListener(() => anim.SetTrigger(Blank));
+        Singleton.Instance.PlayerData.Blank.StartedBlank.AddListener(() => _anim.SetTrigger(Blank));
     }
     
     private void Update()
@@ -39,17 +42,18 @@ public class PlayerAnimation : MonoBehaviour
         // one non-zero coordinate to know in which direction to play idle animation
         if (input.magnitude != 0)
         {
-            anim.SetFloat(Horizontal, input.x);
-            anim.SetFloat(Vertical, input.y);
+            _anim.SetFloat(Horizontal, input.x);
+            _anim.SetFloat(Vertical, input.y);
         }
-        anim.SetFloat(Speed, input.sqrMagnitude);
+        _anim.SetFloat(Speed, input.sqrMagnitude);
         
         // Flipping player, so it is not needed to create separate left and right animations
-        if ((input.x < 0 && tf.localScale.x > 0) || 
-            (input.x > 0 && tf.localScale.x < 0))
+        if ((input.x < 0 && _tf.localScale.x > 0) || 
+            (input.x > 0 && _tf.localScale.x < 0))
         {
-            var localScale = tf.localScale;
-            tf.localScale = new Vector3(-localScale.x, localScale.y, localScale.z);
+            Vector3 localScale = _tf.localScale;
+            _tf.localScale = new Vector3(-localScale.x, localScale.y, localScale.z);
+            FlippedSide?.Invoke();
         }
     }
     

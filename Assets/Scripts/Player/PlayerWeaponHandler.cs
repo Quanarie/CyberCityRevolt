@@ -17,7 +17,7 @@ public class PlayerWeaponHandler : MonoBehaviour
 
         if (weaponsOnFloor.Length <= 1) return;
 
-        var currentWeapon = GetComponentInChildren<Weapon>();
+        Weapon currentWeapon = GetComponentInChildren<Weapon>();
         currentWeapon.DropWeapon();
 
         SortWeaponsByDistance(ref weaponsOnFloor);
@@ -34,7 +34,7 @@ public class PlayerWeaponHandler : MonoBehaviour
 
         closestWeapon.transform.SetParent(Singleton.Instance.PlayerData.Player.transform);
         closestWeapon.transform.localPosition = weaponOffset;
-        var weaponComponent = closestWeapon.GetComponent<Weapon>();
+        Weapon weaponComponent = closestWeapon.GetComponent<Weapon>();
         weaponComponent.PickupWeapon(transform);
         ChangedWeapon?.Invoke();
     }
@@ -45,10 +45,8 @@ public class PlayerWeaponHandler : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, arr[i].transform.position) <
                 Vector3.Distance(transform.position, arr[i + 1].transform.position)) continue;
-
-            Collider2D temp = arr[i];
-            arr[i] = arr[i + 1];
-            arr[i + 1] = temp;
+            
+            (arr[i], arr[i + 1]) = (arr[i + 1], arr[i]);
             i = 0;
         }
     }

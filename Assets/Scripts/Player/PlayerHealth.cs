@@ -1,21 +1,22 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerHealth : Health
 {
     private bool isDying = false;
-    private bool isInvincible = false;
+    private bool _isInvincible = false;
+    private Vector3 _spawnPoint;
 
     protected override void Start()
     {
         base.Start();
-        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(() => isInvincible = true);
-        Singleton.Instance.PlayerData.Movement.EndedRolling.AddListener(() => isInvincible = false);
+        _spawnPoint = transform.position;
+        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(() => _isInvincible = true);
+        Singleton.Instance.PlayerData.Movement.EndedRolling.AddListener(() => _isInvincible = false);
     }
 
     public override void ReceiveDamage(int dmg)
     {
-        if (isInvincible) return;
+        if (_isInvincible) return;
         
         base.ReceiveDamage(dmg);
     }
@@ -33,7 +34,7 @@ public class PlayerHealth : Health
     public void Respawn()
     {
         Singleton.Instance.PlayerData.Input.ActivateInput();
-        transform.position = Vector3.zero;
+        transform.position = _spawnPoint;
         currentHitPoints = maxHitPoints;
         isDying = false;
         ChangedHp?.Invoke(currentHitPoints);

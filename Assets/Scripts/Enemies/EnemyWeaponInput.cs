@@ -3,28 +3,27 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyInfo))]
 public class EnemyWeaponInput : WeaponInput
 {
-    private Transform playerTransform;
-    private EnemyInfo info;
+    private Transform _playerTransform;
+    private EnemyInfo _info;
     
-    private Vector2 target;
+    private Vector2 _target;
 
     private void Start()
     {
-        playerTransform = Singleton.Instance.PlayerData.Player.transform;
-        info = GetComponent<EnemyInfo>();
+        _playerTransform = Singleton.Instance.PlayerData.Player.transform;
+        _info = GetComponent<EnemyInfo>();
     }
 
     private void Update()
     {
-        var plPos = playerTransform.position;
+        Vector3 plPos = _playerTransform.position;
 
-        if (Vector3.Distance(plPos, transform.position) > info.TriggerDistance) return;
-
-        if (info.IsThereObstacleBetweenMeAndPlayer()) return;
+        if (Vector3.Distance(plPos, transform.position) > _info.TriggerDistance) return;
+        if (_info.IsThereObstacleBetweenMeAndPlayer()) return;
         
-        target = plPos;
-        Shoot?.Invoke(target);
+        _target = plPos;
+        Shoot?.Invoke(_target);
     }
 
-    public override Vector2 GetTarget() => target;
+    public override Vector2 GetTarget() => _target;
 }

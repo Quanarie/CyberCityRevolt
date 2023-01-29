@@ -10,20 +10,19 @@ using UnityEngine.Events;
 /// </summary>
 public abstract class Weapon : MonoBehaviour
 {
-    [HideInInspector] public UnityEvent Shot;
-
     protected CameraMovement cam;
     [SerializeField] protected float cameraShakeDuration;
     [SerializeField] protected float cameraShakeMagnitude;
     
     [SerializeField] protected WeaponInfo info;
     
-    protected float timeElapsedFromLastShot = 0f;
     protected Bullet[] spawnedBullets;
     protected WeaponInput input;
+    
+    protected float timeElapsedFromLastShot = 0f;
     protected bool isOnPlayer;
 
-    public bool isDropped { get; set; }
+    public bool isDropped { get; protected set; }
     public float GetRechargeTime() => info.rechargeTime;
     public float GetElapsedTime() => timeElapsedFromLastShot;
     
@@ -31,7 +30,8 @@ public abstract class Weapon : MonoBehaviour
     {
         if (!transform.parent.TryGetComponent(out input))
         {
-            Debug.LogError("No WeaponInput on: " + transform.parent.name);
+            Debug.LogError("No WeaponInput on parent: " + transform.parent.name 
+                                                        + " of weapon: " + gameObject.name);
         }
         
         input.Shoot.AddListener(ShootContainer);
@@ -63,13 +63,6 @@ public abstract class Weapon : MonoBehaviour
     {
         transform.SetParent(parent);
         isDropped = false;
-        Initialize();
-    }
-
-    private void Initialize()
-    {
-        var weaponScale = transform.localScale;
-        transform.localScale = new Vector3(Mathf.Abs(weaponScale.x), weaponScale.y, weaponScale.z);
         Start();
     }
 
@@ -84,13 +77,13 @@ public abstract class Weapon : MonoBehaviour
 
     private void RotateWeapon(Vector2 whereToAim)
     {
-        var aimDirection = whereToAim - (Vector2)transform.position;
-        var aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
+        Vector3 aimDirection = whereToAim - (Vector2)transform.position;
+        float aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
 
-        var thisTransform = transform;
-        var weaponScale = thisTransform.localScale;
-        var parentScale = thisTransform.parent.localScale;
-        var targetRelative = whereToAim.x - thisTransform.position.x;
+        Transform thisTransform = transform;
+        Vector3 weaponScale = thisTransform.localScale;
+        Vector3 parentScale = thisTransform.parent.localScale;
+        float targetRelative = whereToAim.x - thisTransform.position.x;
         if (parentScale.x > 0 && targetRelative < 0)
         {
             transform.localScale = new Vector3(-Mathf.Abs(weaponScale.x), weaponScale.y, weaponScale.z);
@@ -104,7 +97,7 @@ public abstract class Weapon : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(weaponScale.x), weaponScale.y, weaponScale.z);
         }
 
-        var rot = transform.rotation.eulerAngles;
+        Vector3 rot = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
     }
     
@@ -145,15 +138,15 @@ public abstract class Weapon : MonoBehaviour
         
         foreach (var bullet in spawnedBullets)
         {
-            var aimDirection = bullet.GetComponent<Rigidbody2D>().velocity;
-            var aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
+            Vector3 aimDirection = bullet.GetComponent<Rigidbody2D>().velocity;
+            float aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
             
-            var rot = bullet.transform.rotation.eulerAngles;
+            Vector3 rot = bullet.transform.rotation.eulerAngles;
             bullet.transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
 
             if (aimDirection.x > 0f) continue;
             
-            var bScale = bullet.transform.localScale;
+            Vector3 bScale = bullet.transform.localScale;
             bullet.transform.localScale = new Vector3(-Mathf.Abs(bScale.x), bScale.y, bScale.z);
         }
     }

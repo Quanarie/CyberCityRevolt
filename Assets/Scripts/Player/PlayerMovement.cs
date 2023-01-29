@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -12,9 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rollingSpeed;
     [SerializeField] private float rollRechargeTime;
 
-    private float timeFromLastRoll;
+    private float _timeFromLastRoll;
 
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
     
     private Vector2 input;
     private Vector2 nonZeroInput;
@@ -23,26 +22,27 @@ public class PlayerMovement : MonoBehaviour
     
     private void Start()
     {
-        if (!TryGetComponent(out rb))
+        if (!TryGetComponent(out _rb))
         {
             Debug.LogError("No Rigidbody2D on Player");
         }
         
-        Singleton.Instance.PlayerData.Blank.StartedBlank.AddListener(EndRollIfStartedBlank);
+        Singleton.Instance.PlayerData.Blank.StartedBlank.AddListener(EndRollIfStartedOtherAnimation);
+        Singleton.Instance.PlayerData.Health.Dying.AddListener(EndRollIfStartedOtherAnimation);
     }
 
     private void FixedUpdate()
     {
         if (isRolling)
         {
-            rb.MovePosition(rb.position + rollingSpeed * Time.fixedDeltaTime * rollingInput.normalized);
+            _rb.MovePosition(_rb.position + rollingSpeed * Time.fixedDeltaTime * rollingInput.normalized);
         }
         else
         {
-            rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * input.normalized);
+            _rb.MovePosition(_rb.position + speed * Time.fixedDeltaTime * input.normalized);
         }
 
-        timeFromLastRoll += Time.fixedDeltaTime;
+        _timeFromLastRoll += Time.fixedDeltaTime;
     }
 
     // New Unity input system (calls this when WASD pressed)
@@ -57,15 +57,15 @@ public class PlayerMovement : MonoBehaviour
     
     public void OnRoll(InputValue value)
     {
-        if (isRolling || timeFromLastRoll < rollRechargeTime) return;
+        if (isRolling || _timeFromLastRoll < rollRechargeTime) return;
 
         StartedRolling?.Invoke();
         isRolling = true;
         rollingInput = nonZeroInput;
-        timeFromLastRoll = 0f;
+        _timeFromLastRoll = 0f;
     }
 
-    private void EndRollIfStartedBlank()
+    private void EndRollIfStartedOtherAnimation()
     {
         if (!isRolling) return;
         

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 // Main singleton class that gives access to all managers in the game, which
@@ -12,7 +13,7 @@ public class Singleton : MonoBehaviour
     public DialogueData DialogueData { get; private set; }
     public BulletSpawner BulletSpawner { get; private set; }
     public PauseMenuManager PauseMenuManager { get; private set; }
-    
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

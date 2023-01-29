@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -11,26 +10,27 @@ public class PlayerBlank : MonoBehaviour
     [SerializeField] private float rechargeTime;
 
     private bool isBlanking;
-    private float timeFromLastBlank;
+    private float _timeFromLastBlank;
 
     private void Start()
     {
-        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(EndBlankIfStartedRolling);
+        Singleton.Instance.PlayerData.Movement.StartedRolling.AddListener(EndBlankIfStartedOtherAnimation);
+        Singleton.Instance.PlayerData.Health.Dying.AddListener(EndBlankIfStartedOtherAnimation);
     }
 
     private void Update()
     {
-        timeFromLastBlank += Time.deltaTime;
+        _timeFromLastBlank += Time.deltaTime;
     }
 
     public void OnBlank(InputValue value)
     {
-        if (isBlanking || timeFromLastBlank < rechargeTime) return;
+        if (isBlanking || _timeFromLastBlank < rechargeTime) return;
 
         DestroyAllBulletsWithinRadius();
         isBlanking = true;
         StartedBlank?.Invoke();
-        timeFromLastBlank = 0f;
+        _timeFromLastBlank = 0f;
     }
     
     private void DestroyAllBulletsWithinRadius()
@@ -44,7 +44,7 @@ public class PlayerBlank : MonoBehaviour
         }
     }
 
-    private void EndBlankIfStartedRolling()
+    private void EndBlankIfStartedOtherAnimation()
     {
         if (!isBlanking) return;
         

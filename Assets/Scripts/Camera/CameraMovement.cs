@@ -7,24 +7,24 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float smoothTime;
     [SerializeField] private float constraint;
 
-    private Camera mainCam;
-    private Transform playerTransform;
+    private Camera _mainCam;
+    private Transform _playerTransform;
     
     private void Start()
     {
-        mainCam = Camera.main;
-        playerTransform = Singleton.Instance.PlayerData.Player.transform;
+        _mainCam = Camera.main;
+        _playerTransform = Singleton.Instance.PlayerData.Player.transform;
     }
 
     // FixedUpdate is stopped by setting Time.timeScale to 0f, unlike Update()
     private void FixedUpdate()
     {
-        var mousePosInWorld = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        var plPos = playerTransform.position;
-        var targetPosition = mousePosInWorld;
+        Vector3 mousePosInWorld = _mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector3 plPos = _playerTransform.position;
+        Vector3 targetPosition = mousePosInWorld;
         targetPosition.x = Mathf.Clamp(targetPosition.x, -constraint + plPos.x, constraint + plPos.x);
         targetPosition.y = Mathf.Clamp(targetPosition.y, -constraint + plPos.y, constraint + plPos.y);
-        var vel = Vector3.zero;
+        Vector3 vel = Vector3.zero;
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, 
             ref vel, smoothTime);
     }
@@ -33,18 +33,18 @@ public class CameraMovement : MonoBehaviour
 
     private IEnumerator ShakeCor(float dur, float magn)
     {
-        Vector3 orignalPosition = transform.position;
+        Vector3 originalPos = transform.position;
         float elapsed = 0f;
         
         while (elapsed < dur)
         {
-            float x = Random.Range(-1f, 1f) * magn + orignalPosition.x;
-            float y = Random.Range(-1f, 1f) * magn + orignalPosition.y;
+            float x = Random.Range(-1f, 1f) * magn + originalPos.x;
+            float y = Random.Range(-1f, 1f) * magn + originalPos.y;
 
-            transform.position = new Vector3(x, y, orignalPosition.z);
+            transform.position = new Vector3(x, y, originalPos.z);
             elapsed += Time.deltaTime;
             yield return 0;
         }
-        transform.position = orignalPosition;
+        transform.position = originalPos;
     }
 }

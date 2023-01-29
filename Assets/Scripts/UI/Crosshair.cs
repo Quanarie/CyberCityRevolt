@@ -20,8 +20,7 @@ public class Crosshair : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var mousePosInWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        mousePosInWorld = new Vector3(mousePosInWorld.x, mousePosInWorld.y, 0f);
-        transform.position = mousePosInWorld;
+        Vector3 mousePosInWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        transform.position = new Vector3(mousePosInWorld.x, mousePosInWorld.y, 0f);
     }
 }

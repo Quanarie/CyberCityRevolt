@@ -41,7 +41,7 @@ public class Hearts : MonoBehaviour
 
     private void SpawnHeart(GameObject prefab, float offsetX)
     {
-        var heart = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+        GameObject heart = Instantiate(prefab, transform.position, Quaternion.identity, transform);
         heart.GetComponent<RectTransform>().localPosition = new Vector3(offsetX, 0f, 0f);
         hearts.Add(heart);
     }

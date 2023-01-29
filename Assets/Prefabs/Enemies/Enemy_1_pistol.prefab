@@ -238,7 +238,7 @@ MonoBehaviour:
   ChangedHp:
     m_PersistentCalls:
       m_Calls: []
-  maxHitPoints: 1
+  maxHitPoints: 10
 --- !u!114 &23134074348054190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,9 +528,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5317f9086b6140068ccc4491fdcf0130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Shot:
-    m_PersistentCalls:
-      m_Calls: []
   cameraShakeDuration: 0.05
   cameraShakeMagnitude: 0.05
   info:

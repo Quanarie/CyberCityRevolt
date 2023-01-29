@@ -1,5 +1,4 @@
 using System.Collections;
-using Newtonsoft.Json.Bson;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyInfo))]
@@ -10,34 +9,34 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private Transform route;
     [SerializeField] private float waitOnPointTime;
     
-    private Rigidbody2D rb;
-    private Transform playerTransform;
-    private EnemyInfo info;
-    private Vector3[] routePoints;
-    private int currentRoutePoint = 0;
+    private Rigidbody2D _rb;
+    private Transform _playerTransform;
+    private EnemyInfo _info;
+    private Vector3[] _routePoints;
+    private int _currentRoutePoint = 0;
     private const float MINIMAL_DISTANCE_TO_POINT = 0.1f;
-    private bool isWaiting = false;
+    private bool _isWaiting = false;
 
     private void Start()
     {
-        if (!TryGetComponent(out rb))
+        if (!TryGetComponent(out _rb))
         {
             Debug.LogError("No Rigidbody2D on Enemy" + gameObject.name);
         }
 
-        playerTransform = Singleton.Instance.PlayerData.Player.transform;
-        info = GetComponent<EnemyInfo>();
+        _playerTransform = Singleton.Instance.PlayerData.Player.transform;
+        _info = GetComponent<EnemyInfo>();
 
         if (route == null || route.childCount <= 1)
         {
-            routePoints = new[] { transform.position };
+            _routePoints = new[] { transform.position };
             return;
         }
         
-        routePoints = new Vector3[route.childCount];
+        _routePoints = new Vector3[route.childCount];
         for (int i = 0; i < route.childCount; i++)
         {
-            routePoints[i] = route.GetChild(i).position;
+            _routePoints[i] = route.GetChild(i).position;
         }
     }
 
@@ -45,55 +44,54 @@ public class EnemyMovement : MonoBehaviour
     {
         CollideWithOtherEnemies();
         
-        float distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
+        float distanceToPlayer = Vector3.Distance(_playerTransform.position, transform.position);
         
-        if (distanceToPlayer < info.MinDistanceToPlayer || distanceToPlayer > info.TriggerDistance || 
-            info.IsThereObstacleBetweenMeAndPlayer())
+        if (distanceToPlayer > _info.TriggerDistance || _info.IsThereObstacleBetweenMeAndPlayer())
         {
             MoveOnRoute();
-            return;
         }
-        
-       MoveTo(playerTransform.position);
-    }
-
-    private void MoveTo(Vector3 destination)
-    {
-        info.MoveDirection = destination - transform.position;
-        rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * info.MoveDirection.normalized);
+        else if (distanceToPlayer > _info.MinDistanceToPlayer)
+        {
+            MoveTo(_playerTransform.position);
+        }
     }
 
     private void MoveOnRoute()
     {
-        Vector3 moveToPoint = routePoints[currentRoutePoint];
+        Vector3 moveToPoint = _routePoints[_currentRoutePoint];
         if (Vector3.Distance(moveToPoint, transform.position) < MINIMAL_DISTANCE_TO_POINT)
         {
-            if (isWaiting) return;
+            if (_isWaiting) return;
             StartCoroutine(WaitAndSetNextPoint());
+            return;
         }
-        else
-        {
-            MoveTo(moveToPoint);
-        }
+        
+        MoveTo(moveToPoint);
+    }
+    
+    private void MoveTo(Vector3 destination)
+    {
+        _info.MoveDirection = destination - transform.position;
+        _rb.MovePosition(_rb.position + speed * Time.fixedDeltaTime * _info.MoveDirection.normalized);
     }
 
     IEnumerator WaitAndSetNextPoint()
     {
-        isWaiting = true;
-        info.MoveDirection = Vector2.zero;
+        _isWaiting = true;
+        _info.MoveDirection = Vector2.zero;
         yield return new WaitForSeconds(waitOnPointTime);
-        isWaiting = false;
+        _isWaiting = false;
         SetNextRoutePoint();
     }
 
     private void SetNextRoutePoint()
     {
-        if (currentRoutePoint == routePoints.Length - 1)
+        if (_currentRoutePoint == _routePoints.Length - 1)
         {
-            currentRoutePoint = 0;
+            _currentRoutePoint = 0;
             return;
         }
-        currentRoutePoint++;
+        _currentRoutePoint++;
     }
 
     private void CollideWithOtherEnemies()
@@ -102,11 +100,10 @@ public class EnemyMovement : MonoBehaviour
         {
             if (!col.TryGetComponent<EnemyInfo>(out _) || col.gameObject == gameObject) continue;
 
-            var enPos = col.transform.position;
-            var myPos = transform.position;
-            var distanceBetween = Vector2.Distance(enPos, myPos);
-            var direction = new Vector2(myPos.x - enPos.x, myPos.y - enPos.y).normalized;
-            rb.MovePosition(rb.position + Time.fixedDeltaTime * direction);
+            Vector3 enPos = col.transform.position;
+            Vector3 myPos = transform.position;
+            Vector2 direction = new Vector2(myPos.x - enPos.x, myPos.y - enPos.y).normalized;
+            _rb.MovePosition(_rb.position + Time.fixedDeltaTime * direction);
         }
     }
 }
