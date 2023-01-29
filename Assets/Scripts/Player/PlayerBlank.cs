@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public class PlayerBlank : MonoBehaviour
 {
@@ -22,8 +21,9 @@ public class PlayerBlank : MonoBehaviour
     {
         _timeFromLastBlank += Time.deltaTime;
     }
-
-    public void OnBlank(InputValue value)
+    
+    // Make this random when player is in ass
+    public void TriggerBlank()
     {
         if (isBlanking || _timeFromLastBlank < rechargeTime) return;
 

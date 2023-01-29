@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Blank",
-                    "type": "Button",
-                    "id": "6c9d5a19-63dc-4110-9a34-49e483538434",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Pickup",
                     "type": "Button",
                     "id": "60b6ac2d-1560-453c-a73d-26325e4abf4d",
@@ -289,17 +280,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5a3990f7-6b70-460c-83e0-54b5bf4c8767",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Blank",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
