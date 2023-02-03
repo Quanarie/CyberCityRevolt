@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// The weapon must be the child of shooter (player, enemies).
@@ -25,6 +24,7 @@ public abstract class Weapon : MonoBehaviour
     public bool isDropped { get; protected set; }
     public float GetRechargeTime() => info.rechargeTime;
     public float GetElapsedTime() => timeElapsedFromLastShot;
+    public WeaponInfo GetWeaponInfo() => info;
     
     private void Start()
     {
@@ -54,6 +54,7 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void DropWeapon()
     {
+        PlayerWeaponHandler.StoreWeapon(this);
         transform.SetParent(null);
         input.Shoot.RemoveListener(ShootContainer);
         isDropped = true;
@@ -61,6 +62,7 @@ public abstract class Weapon : MonoBehaviour
     
     public void PickupWeapon(Transform parent)
     {
+        PlayerWeaponHandler.RemoveWeapon(this);
         transform.SetParent(parent);
         isDropped = false;
         Start();
@@ -112,7 +114,9 @@ public abstract class Weapon : MonoBehaviour
         timeElapsedFromLastShot = 0;
     }
 
-    /// <summary> Child must stack all bullets that it spawns is SpawnedBullets array </summary> 
+    /// <summary>
+    /// Child must stack all bullets that it spawns is SpawnedBullets array
+    /// </summary> 
     protected abstract void Shoot(Vector2 whereToAim);
     
     protected void SetLayerBullets()

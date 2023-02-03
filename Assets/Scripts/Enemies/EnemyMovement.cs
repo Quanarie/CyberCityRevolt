@@ -43,19 +43,25 @@ public class EnemyMovement : MonoBehaviour
     private void FixedUpdate()
     {
         CollideWithOtherEnemies();
-        
-        float distanceToPlayer = Vector3.Distance(_playerTransform.position, transform.position);
-        
-        if (distanceToPlayer > _info.TriggerDistance || _info.IsThereObstacleBetweenMeAndPlayer())
+
+        Vector3 plPos = _playerTransform.position;
+
+        float distanceToPlayer = Vector3.Distance(plPos, transform.position);
+
+        if (distanceToPlayer > _info.TriggerDistance)
         {
             MoveOnRoute();
         }
         else if (distanceToPlayer > _info.MinDistanceToPlayer)
         {
-            MoveTo(_playerTransform.position);
+            MoveTo(plPos);
+        }
+        else
+        {
+            _info.MoveDirection = Vector2.zero;
         }
     }
-
+    
     private void MoveOnRoute()
     {
         Vector3 moveToPoint = _routePoints[_currentRoutePoint];
