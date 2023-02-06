@@ -18,7 +18,7 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private void Start()
     {
-        UpdateCurrentWeapon();
+        currentWeapon = GetComponentInChildren<Weapon>();
     }
     
     private void Update()
@@ -29,8 +29,6 @@ public class PlayerWeaponHandler : MonoBehaviour
             Singleton.Instance.WeaponInfoManager.HideInfo();
             return;
         }
-        
-        print(currentWeapon);
         
         Singleton.Instance.WeaponInfoManager.ShowInfo(closestWeapon);
     }
@@ -44,14 +42,8 @@ public class PlayerWeaponHandler : MonoBehaviour
         
         currentWeapon.DropWeapon();
         closestWeapon.PickupWeapon(transform);
+        currentWeapon = closestWeapon;
         ChangedWeapon?.Invoke();
-        
-        UpdateCurrentWeapon();
-    }
-
-    private void UpdateCurrentWeapon()
-    {
-        currentWeapon = GetComponentInChildren<Weapon>();
     }
     
     private Weapon GetClosestWeapon()
