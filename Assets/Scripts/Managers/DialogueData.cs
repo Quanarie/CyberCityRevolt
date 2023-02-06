@@ -6,12 +6,14 @@ public class DialogueData : MonoBehaviour
 {
     [field : SerializeField] public GameObject Box { get; private set; }
     [field : SerializeField] public TextMeshProUGUI Text { get; private set; }
-    [field : SerializeField] public Image Avatar { get; private set; }
+    [field : SerializeField] public Image InterlocutarAvatar { get; private set; }
+    [field : SerializeField] public Image PlayerAvatar { get; private set; }
     
     public bool IsActive { get; private set; }
 
     private Animator boxAnimator;
-    private Animator avatarAnimator;
+    private Animator interlocutarAvatarAnimator;
+    private Animator playerAvatarAnimator;
     
     private static readonly int Opened = Animator.StringToHash("Opened");
     
@@ -22,9 +24,14 @@ public class DialogueData : MonoBehaviour
             Debug.LogError("No animator on DialogueBox");
         }
         
-        if (!Avatar.TryGetComponent(out avatarAnimator))
+        if (!InterlocutarAvatar.TryGetComponent(out interlocutarAvatarAnimator))
         {
-            Debug.LogError("No animator on DialogueAvatar");
+            Debug.LogError("No animator on InterlocutarDialogueAvatar");
+        }
+        
+        if (!PlayerAvatar.TryGetComponent(out playerAvatarAnimator))
+        {
+            Debug.LogError("No animator on PlayerDialogueAvatar");
         }
     }
 
@@ -32,13 +39,15 @@ public class DialogueData : MonoBehaviour
     {
         IsActive = true;
         boxAnimator.SetBool(Opened, true);
-        avatarAnimator.SetBool(Opened, true);
+        interlocutarAvatarAnimator.SetBool(Opened, true);
+        playerAvatarAnimator.SetBool(Opened, true);
     }
 
     public void HideDialogue()
     {
         IsActive = false;
         boxAnimator.SetBool(Opened, false);
-        avatarAnimator.SetBool(Opened, false);
+        interlocutarAvatarAnimator.SetBool(Opened, false);
+        playerAvatarAnimator.SetBool(Opened, false);
     }
 }

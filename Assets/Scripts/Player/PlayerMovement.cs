@@ -68,13 +68,15 @@ public class PlayerMovement : MonoBehaviour
     private void EndRollIfStartedOtherAnimation()
     {
         if (!isRolling) return;
-        
-        EndRolling();
+
+        EndRoll();
     }
     
     // !! Called by animator !!
-    public void EndRolling()
+    public void EndRoll()
     {
+        if (!isRolling) return;
+        
         isRolling = false;
         EndedRolling?.Invoke();
     }

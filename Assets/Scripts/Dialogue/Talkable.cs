@@ -8,6 +8,7 @@ public class Talkable : MonoBehaviour
     [SerializeField] private TextAsset dialogue;
     [SerializeField] private Sprite talkingSprite;
     [SerializeField] private float triggerDistance;
+    [SerializeField] private bool doesStartWithPlayer;
 
     private string[] lines;
     private int currentLine;
@@ -28,7 +29,7 @@ public class Talkable : MonoBehaviour
         
         currentLine = 0;
         text = Singleton.Instance.DialogueData.Text;
-        avatar = Singleton.Instance.DialogueData.Avatar;
+        avatar = Singleton.Instance.DialogueData.InterlocutarAvatar;
     }
 
     private void Update()
@@ -66,6 +67,30 @@ public class Talkable : MonoBehaviour
             HideDialogue();
             return false;
         }
+
+        if (doesStartWithPlayer)
+        {
+            if (currentLine % 2 == 0)
+            {
+                text.alignment = TextAlignmentOptions.TopRight;
+            }
+            else
+            {
+                text.alignment = TextAlignmentOptions.TopLeft;
+            }
+        }
+        else
+        {
+            if (currentLine % 2 == 0)
+            {
+                text.alignment = TextAlignmentOptions.TopLeft;
+            }
+            else
+            {
+                text.alignment = TextAlignmentOptions.TopRight;
+            }
+        }
+        
 
         string lineToOut = "";
         if (currentSymbolInLine + maxAmountOfSymbolsInLine < lines[currentLine].Length)

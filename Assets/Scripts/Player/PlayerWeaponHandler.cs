@@ -37,11 +37,10 @@ public class PlayerWeaponHandler : MonoBehaviour
     {
         Weapon closestWeapon = GetClosestWeapon();
         if (closestWeapon == null) return;
-        closestWeapon.transform.SetParent(Singleton.Instance.PlayerData.Player.transform);
-        closestWeapon.transform.localPosition = weaponOffset;
         
         currentWeapon.DropWeapon();
         closestWeapon.PickupWeapon(transform);
+        closestWeapon.transform.localPosition = weaponOffset;
         currentWeapon = closestWeapon;
         ChangedWeapon?.Invoke();
     }
