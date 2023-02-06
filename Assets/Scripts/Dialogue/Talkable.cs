@@ -9,7 +9,6 @@ public class Talkable : MonoBehaviour
 
     private string[] _lines;
     private int _currentLine;
-    private GameObject _box;
     private TextMeshProUGUI _text;
     private PlayerInput _plInput;
 
@@ -23,21 +22,20 @@ public class Talkable : MonoBehaviour
         }
         
         _currentLine = 0;
-        _box = Singleton.Instance.DialogueData.Box;
         _text = Singleton.Instance.DialogueData.Text;
         _plInput = Singleton.Instance.PlayerData.Input;
-        PauseMenuManager.Paused.AddListener(HideWhilePause);
-        PauseMenuManager.Resumed.AddListener(() => enabled = true);
     }
 
     private void Update()
     {
+        if (PauseMenuManager.IsPaused) return;
+        
         var plPos = Singleton.Instance.PlayerData.Player.transform.position;
         if (Vector3.Distance(plPos, transform.position) > triggerDistance) return;
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            if (!_box.activeSelf)
+            if (!Singleton.Instance.DialogueData.IsActive)
             {
                 DisplayDialogue();
             }
@@ -48,7 +46,7 @@ public class Talkable : MonoBehaviour
             }
         }
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame && _box.activeSelf)
+        if (Keyboard.current.qKey.wasPressedThisFrame && Singleton.Instance.DialogueData.IsActive)
         {
             HideDialogue();
         }
@@ -69,20 +67,13 @@ public class Talkable : MonoBehaviour
     private void DisplayDialogue()
     {
         _plInput.DeactivateInput();
-        _box.SetActive(true);
+        Singleton.Instance.DialogueData.DisplayDialogue();
     }
 
     private void HideDialogue()
     {
         _plInput.ActivateInput();
-        _box.SetActive(false);
+        Singleton.Instance.DialogueData.HideDialogue();
         _currentLine = 0;
-    }
-
-    private void HideWhilePause()
-    {
-        _box.SetActive(false);
-        _currentLine = 0;
-        enabled = false;
     }
 }

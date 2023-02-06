@@ -1,16 +1,18 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    public static readonly UnityEvent Paused = new();
-    public static readonly UnityEvent Resumed = new();
+    public static bool IsPaused { get; private set; }
     
     [SerializeField] private GameObject pauseMenuObject;
     [SerializeField] private Button mainMenuButton;
+
+    // This is made so pause menu does not turn off input if it was turned off
+    // (e.g. when player calls pause menu while in dialogie)
+    private bool wasInputActive;
     
     private void Start()
     {
@@ -34,18 +36,22 @@ public class PauseMenuManager : MonoBehaviour
 
     private void OpenPauseMenu()
     {
-        Paused?.Invoke();
+        IsPaused = true;
         pauseMenuObject.SetActive(true);
         Time.timeScale = 0f;
+        wasInputActive = Singleton.Instance.PlayerData.Input.inputIsActive;
         Singleton.Instance.PlayerData.Input.DeactivateInput();
     }
     
     private void ClosePauseMenu()
     {
-        Resumed?.Invoke();
+        IsPaused = false;
         pauseMenuObject.SetActive(false);
         Time.timeScale = 1f;
-        Singleton.Instance.PlayerData.Input.ActivateInput();
+        if (wasInputActive)
+        {
+            Singleton.Instance.PlayerData.Input.ActivateInput();
+        }
     }
     
     public void LoadMainMenu()
