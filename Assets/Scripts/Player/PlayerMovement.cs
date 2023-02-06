@@ -78,4 +78,9 @@ public class PlayerMovement : MonoBehaviour
         isRolling = false;
         EndedRolling?.Invoke();
     }
+
+    public Vector2 GetOffsetToShoot()
+    {
+        return input * speed;
+    }
 }

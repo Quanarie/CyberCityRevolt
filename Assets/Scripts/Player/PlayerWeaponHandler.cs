@@ -30,6 +30,8 @@ public class PlayerWeaponHandler : MonoBehaviour
             return;
         }
         
+        print(currentWeapon);
+        
         Singleton.Instance.WeaponInfoManager.ShowInfo(closestWeapon);
     }
 

@@ -52,8 +52,9 @@ public abstract class Weapon : MonoBehaviour
         health.Dying.AddListener(DropWeapon);
     }
 
-    public virtual void DropWeapon()
+    public void DropWeapon()
     {
+        StopAllCoroutines();
         PlayerWeaponHandler.StoreWeapon(this);
         transform.SetParent(null);
         input.Shoot.RemoveListener(ShootContainer);
@@ -103,11 +104,11 @@ public abstract class Weapon : MonoBehaviour
         transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
     }
     
-    protected virtual void ShootContainer(Vector2 whereToAim)
+    protected virtual void ShootContainer()
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
-        Shoot(whereToAim);
+        Shoot();
         if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
         SetLayerBullets();
         OrientBullets();
@@ -117,9 +118,9 @@ public abstract class Weapon : MonoBehaviour
     /// <summary>
     /// Child must stack all bullets that it spawns is SpawnedBullets array
     /// </summary> 
-    protected abstract void Shoot(Vector2 whereToAim);
+    protected abstract void Shoot();
     
-    protected void SetLayerBullets()
+    private void SetLayerBullets()
     {
         if (spawnedBullets == null) return;
         
@@ -136,7 +137,7 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    protected void OrientBullets()
+    private void OrientBullets()
     {
         if (spawnedBullets == null) return;
         
@@ -153,5 +154,13 @@ public abstract class Weapon : MonoBehaviour
             Vector3 bScale = bullet.transform.localScale;
             bullet.transform.localScale = new Vector3(-Mathf.Abs(bScale.x), bScale.y, bScale.z);
         }
+    }
+    
+    protected void ConfigureAfterShot()
+    {
+        SetLayerBullets();
+        OrientBullets();
+        if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
+        timeElapsedFromLastShot = 0f;
     }
 }

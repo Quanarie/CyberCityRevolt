@@ -33,18 +33,18 @@ public class CameraMovement : MonoBehaviour
 
     private IEnumerator ShakeCor(float dur, float magn)
     {
-        Vector3 originalPos = transform.position;
         float elapsed = 0f;
         
         while (elapsed < dur)
         {
-            float x = Random.Range(-1f, 1f) * magn + originalPos.x;
-            float y = Random.Range(-1f, 1f) * magn + originalPos.y;
+            Vector3 myPos = transform.position;
 
-            transform.position = new Vector3(x, y, originalPos.z);
+            float x = Random.Range(-1f, 1f) * magn + myPos.x;
+            float y = Random.Range(-1f, 1f) * magn + myPos.y;
+
+            transform.position = new Vector3(x, y, myPos.z);
             elapsed += Time.deltaTime;
             yield return 0;
         }
-        transform.position = originalPos;
     }
 }

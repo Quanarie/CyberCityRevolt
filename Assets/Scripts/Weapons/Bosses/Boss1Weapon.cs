@@ -11,37 +11,26 @@ public class Boss1Weapon : Weapon
     [SerializeField] private int quantityOfCircles;
     [SerializeField] private float delayBetweenCircles;
 
-    protected override void ShootContainer(Vector2 whereToAim)
+    protected override void ShootContainer()
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
-        Shoot(whereToAim);
-    }
-    
-    public override void DropWeapon()
-    {
-        StopAllCoroutines();
-        transform.SetParent(null);
-        input.Shoot.RemoveListener(ShootContainer);
-        isDropped = true;
-    }
-    
-    protected override void Shoot(Vector2 whereToAim)
-    {
-        StartCoroutine(SpawnCirclesWithDelay(whereToAim));
+        Shoot();
     }
 
-    IEnumerator SpawnCirclesWithDelay(Vector2 target)
+    protected override void Shoot()
+    {
+        StartCoroutine(SpawnCirclesWithDelay());
+    }
+
+    IEnumerator SpawnCirclesWithDelay()
     {
         for (int i = 0; i < quantityOfCircles; i++)
         {
             var randQuantityOfBullets = Random.Range(minBulletsQuantityInOnCircle, maxBulletsQuantityInOnCircle);
-            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(target, info, 
+            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(input.GetTarget(), info, 
                 randQuantityOfBullets, 360f, out spawnedBullets);
-            SetLayerBullets();
-            OrientBullets();
-            if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
-            timeElapsedFromLastShot = 0f;
+            ConfigureAfterShot();
             yield return new WaitForSeconds(delayBetweenCircles);
         }
     }
