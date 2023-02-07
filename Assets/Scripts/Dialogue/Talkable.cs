@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class Talkable : MonoBehaviour
 {
     [SerializeField] private TextAsset dialogue;
     [SerializeField] private Sprite talkingSprite;
-    [SerializeField] private float triggerDistance;
+    [SerializeField] protected float triggerDistance;
     [SerializeField] private bool doesStartWithPlayer;
 
     private string[] lines;
-    private int currentLine;
-    private TextMeshProUGUI text;
+    protected int currentLine;
+    protected TextMeshProUGUI text;
     
     private float TIME_BETWEEN_LETTERS_SPAWN = 0.01f;
     private int MAX_AMOUNT_CHARACTERS_IN_LINE = 180;
     private int currentSymbolInLine = 0;
-    private bool isTyping = false;
-    private string lineToOut;
+    protected bool isTyping = false;
+    protected string lineToOut;
+    protected bool isActive = false;
 
     private static List<Talkable> talkableCharacters = new();
 
@@ -54,16 +54,16 @@ public class Talkable : MonoBehaviour
         return closestTalkable;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (PauseMenuManager.IsPaused) return;
 
-        if (FindClosestTalkableToPlayer() != this) return;
-        
+        if (Singleton.Instance.DialogueData.IsActive && !isActive) return;
+
         var plPos = Singleton.Instance.PlayerData.Player.transform.position;
         if (Vector3.Distance(plPos, transform.position) > triggerDistance)
         {
-            if (Singleton.Instance.DialogueData.IsActive)
+            if (isActive)
             {
                 HideDialogue();
             }
@@ -72,7 +72,7 @@ public class Talkable : MonoBehaviour
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            if (!Singleton.Instance.DialogueData.IsActive)
+            if (!isActive)
             {
                 DisplayDialogue();
             }
@@ -91,7 +91,7 @@ public class Talkable : MonoBehaviour
         }
     }
 
-    private bool TryDisplayCurrentLine()
+    protected bool TryDisplayCurrentLine()
     {
         if (currentLine >= lines.Length)
         {
@@ -165,20 +165,22 @@ public class Talkable : MonoBehaviour
         isTyping = false;
     }
 
-    private void StopTyping()
+    protected void StopTyping()
     {
         StopAllCoroutines();
         isTyping = false;
     }
     
-    private void DisplayDialogue()
+    protected void DisplayDialogue()
     {
+        isActive = true;
         Singleton.Instance.DialogueData.InterlocutarAvatar.sprite = talkingSprite;
         Singleton.Instance.DialogueData.DisplayDialogue();
     }
 
     private void HideDialogue()
     {
+        isActive = false;
         StopTyping();
         Singleton.Instance.DialogueData.HideDialogue();
         currentLine = 0;
