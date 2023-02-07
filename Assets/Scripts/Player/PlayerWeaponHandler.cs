@@ -19,6 +19,7 @@ public class PlayerWeaponHandler : MonoBehaviour
     private void Start()
     {
         currentWeapon = GetComponentInChildren<Weapon>();
+        currentWeapon.transform.localPosition = weaponOffset;
     }
     
     private void Update()
