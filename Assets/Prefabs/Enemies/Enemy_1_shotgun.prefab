@@ -238,7 +238,7 @@ MonoBehaviour:
   ChangedHp:
     m_PersistentCalls:
       m_Calls: []
-  maxHitPoints: 15
+  maxHitPoints: 2
 --- !u!114 &363133185807640606
 MonoBehaviour:
   m_ObjectHideFlags: 0

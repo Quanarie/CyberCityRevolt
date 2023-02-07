@@ -118,12 +118,13 @@ MonoBehaviour:
   cameraShakeDuration: 0.075
   cameraShakeMagnitude: 0.2
   info:
-    name: Shotgun
     shootPoint: {fileID: 463289015243578337}
     bulletPrefab: {fileID: 1584635873586827209, guid: 59e9bee06cd614ce59e24988e8c4da7a, type: 3}
     damage: 1
     bulletSpeed: 3
     rechargeTime: 2
+    name: Shotgun
+    amountOfBullets: 3
   bulletQuantity: 3
   spreadAngle: 30
 --- !u!1 &7510133126546146909

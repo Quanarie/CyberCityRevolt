@@ -118,12 +118,13 @@ MonoBehaviour:
   cameraShakeDuration: 0.05
   cameraShakeMagnitude: 0.05
   info:
-    name: Pistol
     shootPoint: {fileID: 8008830581172899777}
     bulletPrefab: {fileID: 1584635873586827209, guid: d51bb31fe182b4470ab1c4bcc4d433bf, type: 3}
     damage: 1
     bulletSpeed: 3
     rechargeTime: 1
+    name: Pistol
+    amountOfBullets: 1
 --- !u!1 &9100990391989418912
 GameObject:
   m_ObjectHideFlags: 0

@@ -183,6 +183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   minDistanceToOtherEnemies: 0.25
+  route: {fileID: 0}
+  waitOnPointTime: 0
 --- !u!114 &2485637898149574742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +200,10 @@ MonoBehaviour:
   Dying:
     m_PersistentCalls:
       m_Calls: []
-  maxHitPoints: 20
+  ChangedHp:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHitPoints: 2
 --- !u!114 &2485637898149574831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +342,8 @@ MonoBehaviour:
     damage: 1
     bulletSpeed: 3
     rechargeTime: 5
+    name: 
+    amountOfBullets: 0
   minBulletsQuantityInOnCircle: 4
   maxBulletsQuantityInOnCircle: 20
   quantityOfCircles: 8

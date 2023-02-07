@@ -10,6 +10,7 @@ public class WeaponInfoManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI rechargeTime;
     [SerializeField] private TextMeshProUGUI damage;
     [SerializeField] private TextMeshProUGUI bulletSpeed;
+    [SerializeField] private TextMeshProUGUI amountOfBullets;
 
     private void Start()
     {
@@ -32,6 +33,7 @@ public class WeaponInfoManager : MonoBehaviour
         rechargeTime.text = info.rechargeTime.ToString();
         damage.text = info.damage.ToString();
         bulletSpeed.text = info.bulletSpeed.ToString();
+        amountOfBullets.text = info.amountOfBullets.ToString();
     }
 
     public void HideInfo()

@@ -149,12 +149,13 @@ MonoBehaviour:
   cameraShakeDuration: 0.05
   cameraShakeMagnitude: 0.05
   info:
-    name: Boss3Weapon
     shootPoint: {fileID: 2421636223623155480}
     bulletPrefab: {fileID: 1584635873586827209, guid: 347a188d507a14a449c81040f0dfbf2f, type: 3}
     damage: 1
     bulletSpeed: 8
     rechargeTime: 2
+    name: Boss3Weapon
+    amountOfBullets: 0
   quantityOfBullets: 32
   delayBetweenBulletsInLaser: 0.05
 --- !u!1 &3103183157227024226
@@ -360,7 +361,7 @@ MonoBehaviour:
   ChangedHp:
     m_PersistentCalls:
       m_Calls: []
-  maxHitPoints: 1
+  maxHitPoints: 2
 --- !u!114 &3103183155823230336
 MonoBehaviour:
   m_ObjectHideFlags: 0
