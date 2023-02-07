@@ -3068,6 +3068,10 @@ PrefabInstance:
       propertyPath: <TriggerDistance>k__BackingField
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1409972666362382159, guid: 0738da8b450444f8b8985942bc64a7c4, type: 3}
+      propertyPath: m_Name
+      value: Pistol
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0738da8b450444f8b8985942bc64a7c4, type: 3}
 --- !u!4 &706771122 stripped

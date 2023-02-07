@@ -11,7 +11,12 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private Weapon currentWeapon;
     private static List<Weapon> weaponsOnFloor = new ();
-    public static void StoreWeapon(Weapon toStore) => weaponsOnFloor.Add(toStore);
+
+    public static void StoreWeapon(Weapon toStore)
+    {
+        if (weaponsOnFloor.Contains(toStore)) return;
+        weaponsOnFloor.Add(toStore);
+    }
     public static void RemoveWeapon(Weapon toRemove) => weaponsOnFloor.Remove(toRemove);
     
     private const float PICKUP_DISTANCE = 0.5f;
