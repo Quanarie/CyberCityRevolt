@@ -9,34 +9,34 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private Transform route;
     [SerializeField] private float waitOnPointTime;
     
-    private Rigidbody2D _rb;
-    private Transform _playerTransform;
-    private EnemyInfo _info;
-    private Vector3[] _routePoints;
-    private int _currentRoutePoint = 0;
+    private Rigidbody2D rb;
+    private Transform playerTransform;
+    private EnemyInfo info;
+    private Vector3[] routePoints;
+    private int currentRoutePoint = 0;
     private const float MINIMAL_DISTANCE_TO_POINT = 0.1f;
-    private bool _isWaiting = false;
+    private bool isWaiting = false;
 
     private void Start()
     {
-        if (!TryGetComponent(out _rb))
+        if (!TryGetComponent(out rb))
         {
             Debug.LogError("No Rigidbody2D on Enemy" + gameObject.name);
         }
 
-        _playerTransform = Singleton.Instance.PlayerData.Player.transform;
-        _info = GetComponent<EnemyInfo>();
+        playerTransform = Singleton.Instance.PlayerData.Player.transform;
+        info = GetComponent<EnemyInfo>();
 
         if (route == null || route.childCount <= 1)
         {
-            _routePoints = new[] { transform.position };
+            routePoints = new[] { transform.position };
             return;
         }
         
-        _routePoints = new Vector3[route.childCount];
+        routePoints = new Vector3[route.childCount];
         for (int i = 0; i < route.childCount; i++)
         {
-            _routePoints[i] = route.GetChild(i).position;
+            routePoints[i] = route.GetChild(i).position;
         }
     }
 
@@ -44,30 +44,30 @@ public class EnemyMovement : MonoBehaviour
     {
         CollideWithOtherEnemies();
 
-        Vector3 plPos = _playerTransform.position;
+        Vector3 plPos = playerTransform.position;
 
         float distanceToPlayer = Vector3.Distance(plPos, transform.position);
 
-        if (distanceToPlayer > _info.TriggerDistance)
+        if (distanceToPlayer > info.TriggerDistance)
         {
             MoveOnRoute();
         }
-        else if (distanceToPlayer > _info.MinDistanceToPlayer)
+        else if (distanceToPlayer > info.MinDistanceToPlayer)
         {
             MoveTo(plPos);
         }
         else
         {
-            _info.MoveDirection = Vector2.zero;
+            info.MoveDirection = Vector2.zero;
         }
     }
     
     private void MoveOnRoute()
     {
-        Vector3 moveToPoint = _routePoints[_currentRoutePoint];
+        Vector3 moveToPoint = routePoints[currentRoutePoint];
         if (Vector3.Distance(moveToPoint, transform.position) < MINIMAL_DISTANCE_TO_POINT)
         {
-            if (_isWaiting) return;
+            if (isWaiting) return;
             StartCoroutine(WaitAndSetNextPoint());
             return;
         }
@@ -77,27 +77,27 @@ public class EnemyMovement : MonoBehaviour
     
     private void MoveTo(Vector3 destination)
     {
-        _info.MoveDirection = destination - transform.position;
-        _rb.MovePosition(_rb.position + speed * Time.fixedDeltaTime * _info.MoveDirection.normalized);
+        info.MoveDirection = destination - transform.position;
+        rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * info.MoveDirection.normalized);
     }
 
     IEnumerator WaitAndSetNextPoint()
     {
-        _isWaiting = true;
-        _info.MoveDirection = Vector2.zero;
+        isWaiting = true;
+        info.MoveDirection = Vector2.zero;
         yield return new WaitForSeconds(waitOnPointTime);
-        _isWaiting = false;
+        isWaiting = false;
         SetNextRoutePoint();
     }
 
     private void SetNextRoutePoint()
     {
-        if (_currentRoutePoint == _routePoints.Length - 1)
+        if (currentRoutePoint == routePoints.Length - 1)
         {
-            _currentRoutePoint = 0;
+            currentRoutePoint = 0;
             return;
         }
-        _currentRoutePoint++;
+        currentRoutePoint++;
     }
 
     private void CollideWithOtherEnemies()
@@ -109,7 +109,7 @@ public class EnemyMovement : MonoBehaviour
             Vector3 enPos = col.transform.position;
             Vector3 myPos = transform.position;
             Vector2 direction = new Vector2(myPos.x - enPos.x, myPos.y - enPos.y).normalized;
-            _rb.MovePosition(_rb.position + Time.fixedDeltaTime * direction);
+            rb.MovePosition(rb.position + Time.fixedDeltaTime * direction);
         }
     }
 }

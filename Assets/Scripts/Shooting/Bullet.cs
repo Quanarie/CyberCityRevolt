@@ -25,9 +25,14 @@ public class Bullet : MonoBehaviour
         if (col.TryGetComponent(out _target))
         {
             _target.ReceiveDamage(_damage);
+            DestroyBullet();
+            return;
         }
-        
-        DestroyBullet();
+
+        if (col.gameObject.layer == LayerMask.NameToLayer("Collision"))
+        {
+            DestroyBullet();
+        }
     }
     
     public void DestroyBullet()

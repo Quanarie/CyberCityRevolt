@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,6 +20,8 @@ public class DialogueData : MonoBehaviour
     private AnimationClip boxCloseAnimation;
     
     private static readonly int Opened = Animator.StringToHash("Opened");
+    
+    private const float MIN_DISTANCE_TO_ENEMY_TO_DISPLAY_TRIGGERED_DIALOGUE = 20f;
     
     private void Start()
     {
@@ -58,9 +59,23 @@ public class DialogueData : MonoBehaviour
 
     private void Update()
     {
-        if (TalkableTriggers.Count == 0 || IsActive) return;
+        if (TalkableTriggers.Count == 0 || IsActive || isTooCloseToEnemies()) return;
         
         TalkableTriggers.Dequeue().Trigger();
+    }
+
+    private bool isTooCloseToEnemies()
+    {
+        Vector3 plPos = Singleton.Instance.PlayerData.Player.transform.position;
+        foreach (Transform enemy in EnemySpawner.EnemiesSpawned)
+        {
+            if (Vector3.Distance(enemy.position, plPos) < MIN_DISTANCE_TO_ENEMY_TO_DISPLAY_TRIGGERED_DIALOGUE)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void DisplayDialogue()
