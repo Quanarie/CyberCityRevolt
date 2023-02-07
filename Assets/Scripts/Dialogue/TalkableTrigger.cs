@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 public class TalkableTrigger : Talkable
 {
     private bool wasActivated = false;
+
+    public bool IsActive() => isActive;
     
     protected override void Update()
     {
@@ -25,22 +27,25 @@ public class TalkableTrigger : Talkable
         }
     }
 
+    public void Trigger()
+    {
+        DisplayDialogue();
+        isActive = true;
+            
+        if (TryDisplayCurrentLine())
+        {
+            currentLine++;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.TryGetComponent<PlayerMovement>(out _)) return;
-        
-        if (PauseMenuManager.IsPaused) return;
-        
-        if (!Singleton.Instance.DialogueData.IsActive && !wasActivated)
+
+        if (!wasActivated)
         {
-            DisplayDialogue();
+            Singleton.Instance.DialogueData.TalkableTriggers.Enqueue(this);
             wasActivated = true;
-            isActive = true;
-            
-            if (TryDisplayCurrentLine())
-            {
-                currentLine++;
-            }
         }
     }
 }
