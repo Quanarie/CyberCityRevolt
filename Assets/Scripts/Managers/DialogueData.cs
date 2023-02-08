@@ -6,6 +6,7 @@ using TMPro;
 
 public class DialogueData : MonoBehaviour
 {
+    [field : SerializeField] public CanvasGroup Wrapper { get; private set; }
     [field : SerializeField] public GameObject Box { get; private set; }
     [field : SerializeField] public TextMeshProUGUI Text { get; private set; }
     [field : SerializeField] public Image InterlocutarAvatar { get; private set; }
@@ -21,7 +22,7 @@ public class DialogueData : MonoBehaviour
     
     private static readonly int Opened = Animator.StringToHash("Opened");
     
-    private const float MIN_DISTANCE_TO_ENEMY_TO_DISPLAY_TRIGGERED_DIALOGUE = 30f;
+    private const float DIALOGUE_ALPHA_WHILE_FIGHTING = 0.4f;
     
     private void Start()
     {
@@ -43,22 +44,27 @@ public class DialogueData : MonoBehaviour
         boxCloseAnimation = PlayerAnimation.FindAnimation(boxAnimator, "Close");
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        if (TalkableTriggers.Count == 0 || IsActive || isTooCloseToEnemies()) return;
+        if (isThereTriggeredEnemy())
+        {
+            Wrapper.alpha = DIALOGUE_ALPHA_WHILE_FIGHTING;
+        }
+        else
+        {
+            Wrapper.alpha = 1f;
+        }
+        
+        if (TalkableTriggers.Count == 0 || IsActive) return;
         
         TalkableTriggers.Dequeue().Trigger();
     }
 
-    private bool isTooCloseToEnemies()
+    private bool isThereTriggeredEnemy()
     {
-        Vector3 plPos = Singleton.Instance.PlayerData.Player.transform.position;
-        foreach (Transform enemy in EnemySpawner.EnemiesSpawned)
+        foreach (EnemyMovement enemy in EnemySpawner.EnemiesSpawned)
         {
-            if (Vector3.Distance(enemy.position, plPos) < MIN_DISTANCE_TO_ENEMY_TO_DISPLAY_TRIGGERED_DIALOGUE)
-            {
-                return true;
-            }
+            if (enemy.IsTriggered()) return true;
         }
 
         return false;

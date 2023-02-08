@@ -52,5 +52,14 @@ public class EnemyWeaponInput : WeaponInput
         Shoot?.Invoke(target);
     }
 
-    public override Vector2 GetWhereToAim() => Singleton.Instance.PlayerData.Player.transform.position;
+    public override Vector2 GetWhereToAim()
+    {
+        Vector3 plPos = playerTransform.position;
+
+        if (Vector3.Distance(plPos, transform.position) < info.TriggerDistance)
+        {
+            return plPos;
+        }
+        return target;
+    }
 }

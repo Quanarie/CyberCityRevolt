@@ -64,6 +64,8 @@ public class EnemyMovement : MonoBehaviour
     
     private void MoveOnRoute()
     {
+        if (route == null) return;
+        
         Vector3 moveToPoint = routePoints[currentRoutePoint];
         if (Vector3.Distance(moveToPoint, transform.position) < MINIMAL_DISTANCE_TO_POINT)
         {
@@ -111,5 +113,12 @@ public class EnemyMovement : MonoBehaviour
             Vector2 direction = new Vector2(myPos.x - enPos.x, myPos.y - enPos.y).normalized;
             rb.MovePosition(rb.position + Time.fixedDeltaTime * direction);
         }
+    }
+
+    public bool IsTriggered()
+    {
+        Vector3 plPos = playerTransform.position;
+        float distanceToPlayer = Vector3.Distance(plPos, transform.position);
+        return distanceToPlayer < info.TriggerDistance;
     }
 }

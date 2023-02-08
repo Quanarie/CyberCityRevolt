@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Stage : MonoBehaviour
+public class StagePrefabs : MonoBehaviour, ISpawnable
 {
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private int[] amountOfEveryEnemy;
@@ -19,10 +19,9 @@ public class Stage : MonoBehaviour
                 enemy.transform.position = transform.position + (Vector3)Random.insideUnitCircle * spawnRadius;
                 
                 EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                
-                EnemySpawner.EnemiesSpawned.Add(enemy.transform);
-                enemyHealth.Dying.AddListener(() => EnemySpawner.EnemiesSpawned.Remove(enemy.transform));
-
+                EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
+                EnemySpawner.EnemiesSpawned.Add(enemyMovement);
+                enemyHealth.Dying.AddListener(() => EnemySpawner.EnemiesSpawned.Remove(enemyMovement));
                 enemyHealth.Dying.AddListener(() => amountOfDeadEnemies++);
                 amountOfSpawnedEnemies++;
             }

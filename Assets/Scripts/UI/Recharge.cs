@@ -6,7 +6,7 @@ public class Recharge : MonoBehaviour
     [SerializeField] private float maxLocalX;
     [SerializeField] private Transform value;
 
-    private Weapon _currentWeapon;
+    private Weapon currentWeapon;
 
     private void Start()
     {
@@ -19,8 +19,8 @@ public class Recharge : MonoBehaviour
 
     private void Update()
     {
-        float from0To1 = Mathf.Clamp(_currentWeapon.GetElapsedTime() /
-                                     _currentWeapon.GetRechargeTime(), 0f, 1f);
+        float from0To1 = Mathf.Clamp(currentWeapon.GetElapsedTime() /
+                                     currentWeapon.GetRechargeTime(), 0f, 1f);
         float x = minLocalX + from0To1 * (maxLocalX - minLocalX);
         value.localPosition = new Vector3(x, value.localPosition.y, 0f);
     }
@@ -37,6 +37,6 @@ public class Recharge : MonoBehaviour
 
     private void WeaponChanged()
     {
-        _currentWeapon = Singleton.Instance.PlayerData.Player.GetComponentInChildren<Weapon>();
+        currentWeapon = Singleton.Instance.PlayerData.Player.GetComponentInChildren<Weapon>();
     }
 }

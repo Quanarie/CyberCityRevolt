@@ -5,11 +5,15 @@ public class TalkableTrigger : Talkable
 {
     private bool wasActivated = false;
 
-    public bool IsActive() => isActive;
-    
-    protected override void Update()
+    private void Update()
     {
         if (PauseMenuManager.IsPaused || !isActive) return;
+
+        if (Keyboard.current.qKey.wasPressedThisFrame && isActive)
+        {
+            HideDialogue();
+            return;
+        }
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {

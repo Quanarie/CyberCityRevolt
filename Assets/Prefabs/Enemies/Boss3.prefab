@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 3103183157227024230}
   - component: {fileID: 3103183157227024231}
   - component: {fileID: 3103183157227024229}
-  - component: {fileID: 3103183155823230336}
+  - component: {fileID: 2987598997472687009}
   m_Layer: 10
   m_Name: Boss3
   m_TagString: Untagged
@@ -362,7 +362,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   maxHitPoints: 2
---- !u!114 &3103183155823230336
+--- !u!114 &2987598997472687009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -371,10 +371,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3103183157227024226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979d2e6ccd664d1a8be8ca112ae7e7d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b3da2c5ab904433b0d36ddf9c7e4f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Shoot:
     m_PersistentCalls:
       m_Calls: []
-  predictableShootCoef: 0.5

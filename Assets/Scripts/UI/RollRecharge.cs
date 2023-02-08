@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// I want to draw an animation of flames under the feet of Gray indicating the recharge time of Roll
 public class RollRecharge : MonoBehaviour
 {
     private Animator animator;

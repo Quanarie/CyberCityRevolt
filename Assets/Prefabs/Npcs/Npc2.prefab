@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 873950502730752389}
   - component: {fileID: 873950502730752386}
   - component: {fileID: 873950502730752384}
-  - component: {fileID: 873950502730752395}
+  - component: {fileID: 1113915391303829469}
   m_Layer: 8
   m_Name: Npc2
   m_TagString: Untagged
@@ -124,7 +124,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.05}
   m_Size: {x: 0.4, y: 0.25}
   m_Direction: 1
---- !u!114 &873950502730752395
+--- !u!114 &1113915391303829469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,10 +133,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 873950502730752388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8ba9ced968e94c6fb20a40ab2108ff6, type: 3}
+  m_Script: {fileID: 11500000, guid: d0cff1b02bc6433aa7aa7700a673d54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 4900000, guid: c1cde580614540cc86ed88f062601c28, type: 3}
   talkingSprite: {fileID: 1260020162, guid: 8be950a58e03b4f4ab622af9732cd4db, type: 3}
-  triggerDistance: 2
   doesStartWithPlayer: 0
+  triggerDistance: 2

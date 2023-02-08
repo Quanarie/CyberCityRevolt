@@ -3,29 +3,32 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Stage[] stages;
+    [SerializeField] private GameObject[] stages;
     [SerializeField] private Transform enemyParent;
 
-    public static List<Transform> EnemiesSpawned = new();
+    public static List<EnemyMovement> EnemiesSpawned = new();
     public static bool IsLevelComplete { get; private set; }
     
-    private int currentStage = 0;
+    private int currentStageNumber = 0;
+    private ISpawnable currentStage;
 
     private void Start()
     {
         if (stages.Length == 0) return;
         
-        stages[0].SpawnEnemies(enemyParent);
+        stages[0].GetComponent<ISpawnable>().SpawnEnemies(enemyParent);
+        currentStage = stages[0].GetComponent<ISpawnable>();
     }
 
     private void Update()
     {
-        if (!stages[currentStage].IsDone()) return;
+        if (stages.Length == 0 || !currentStage.IsDone()) return;
 
-        if (currentStage < stages.Length - 1)
+        if (currentStageNumber < stages.Length - 1)
         {
-            currentStage++;
-            stages[currentStage].SpawnEnemies(enemyParent);
+            currentStageNumber++;
+            currentStage = stages[currentStageNumber].GetComponent<ISpawnable>();
+            currentStage.SpawnEnemies(enemyParent);
         }
         else
         {
