@@ -61,4 +61,18 @@ public class PlayerAnimation : MonoBehaviour
     {
         input = value.Get<Vector2>();
     }
+    
+    public static AnimationClip FindAnimation(Animator animator, string nameOfClip) 
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == nameOfClip)
+            {
+                return clip;
+            }
+        }
+
+        Debug.LogError("Haven't found a " + nameOfClip + " animation in: " + animator);
+        return null;
+    }
 }

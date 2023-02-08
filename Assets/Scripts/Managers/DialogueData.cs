@@ -40,21 +40,7 @@ public class DialogueData : MonoBehaviour
             Debug.LogError("No animator on PlayerDialogueAvatar");
         }
 
-        boxCloseAnimation = FindAnimation(boxAnimator, "Close");
-    }
-    
-    public AnimationClip FindAnimation(Animator animator, string nameOfClip) 
-    {
-        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
-        {
-            if (clip.name == nameOfClip)
-            {
-                return clip;
-            }
-        }
-
-        Debug.LogError("Haven't found a " + nameOfClip + " animation in: " + animator);
-        return null;
+        boxCloseAnimation = PlayerAnimation.FindAnimation(boxAnimator, "Close");
     }
 
     private void Update()
