@@ -13,32 +13,32 @@ public class Boss2Weapon : Weapon
     [SerializeField] private int quantityOfWaves;
     [SerializeField] private float delayBetweenCircles;
     
-    protected override void ShootContainer()
+    protected override void ShootContainer(Vector2 whereToAim)
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
-        Shoot();
+        Shoot(whereToAim);
     }
 
-    protected override void Shoot()
+    protected override void Shoot(Vector2 whereToAim)
     {
         if (Random.value > 0.5f)
         {
-            StartCoroutine(SpawnLasersWithDelay());
+            StartCoroutine(SpawnLasersWithDelay(whereToAim));
         }
         else
         {
-            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(input.GetTarget(), info, quantityOfBullets1, 
+            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(whereToAim, info, quantityOfBullets1, 
                 spreadAngle, out spawnedBullets);
             ConfigureAfterShot();
         }
     }
 
-    IEnumerator SpawnLasersWithDelay()
+    IEnumerator SpawnLasersWithDelay(Vector2 whereToAim)
     {
         for (int i = 0; i < quantityOfWaves; i++)
         {
-            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(input.GetTarget(), info, 
+            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(whereToAim, info, 
                 quantityOfBullets2, spreadAngle, out spawnedBullets);
             ConfigureAfterShot();
             yield return new WaitForSeconds(delayBetweenCircles);

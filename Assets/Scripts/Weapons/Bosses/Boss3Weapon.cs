@@ -7,23 +7,23 @@ public class Boss3Weapon : Weapon
     [SerializeField] private int quantityOfBullets;
     [SerializeField] private float delayBetweenBulletsInLaser;
     
-    protected override void ShootContainer()
+    protected override void ShootContainer(Vector2 whereToAim)
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
-        Shoot();
+        Shoot(whereToAim);
     }
     
-    protected override void Shoot()
+    protected override void Shoot(Vector2 whereToAim)
     {
-        StartCoroutine(SpawnLaserWithDelay());
+        StartCoroutine(SpawnLaserWithDelay(whereToAim));
     }
 
-    IEnumerator SpawnLaserWithDelay()
+    IEnumerator SpawnLaserWithDelay(Vector2 whereToAim)
     {
         for (int i = 0; i < quantityOfBullets; i++)
         {
-            Singleton.Instance.BulletSpawner.SpawnSingleBullet(input.GetTarget(), info, out spawnedBullets);
+            Singleton.Instance.BulletSpawner.SpawnSingleBullet(whereToAim, info, out spawnedBullets);
             ConfigureAfterShot();
             yield return new WaitForSeconds(delayBetweenBulletsInLaser);
         }

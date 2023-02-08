@@ -77,7 +77,7 @@ public abstract class Weapon : MonoBehaviour
         if (isDropped) return;
         
         timeElapsedFromLastShot += Time.fixedDeltaTime;
-        RotateWeapon(input.GetTarget());
+        RotateWeapon(input.GetWhereToAim());
     }
 
     private void RotateWeapon(Vector2 whereToAim)
@@ -106,11 +106,11 @@ public abstract class Weapon : MonoBehaviour
         transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
     }
     
-    protected virtual void ShootContainer()
+    protected virtual void ShootContainer(Vector2 whereToAim)
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
-        Shoot();
+        Shoot(whereToAim);
         if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
         SetLayerBullets();
         OrientBullets();
@@ -120,7 +120,7 @@ public abstract class Weapon : MonoBehaviour
     /// <summary>
     /// Child must stack all bullets that it spawns is SpawnedBullets array
     /// </summary> 
-    protected abstract void Shoot();
+    protected abstract void Shoot(Vector2 whereToAim);
     
     private void SetLayerBullets()
     {

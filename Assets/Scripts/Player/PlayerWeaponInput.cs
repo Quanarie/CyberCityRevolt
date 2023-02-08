@@ -12,9 +12,9 @@ public class PlayerWeaponInput : WeaponInput
     // Called by PlayerInput
     private void OnFire(InputValue value)
     {
-        Shoot?.Invoke();
+        Shoot?.Invoke(GetWhereToAim());
     }
     
-    public override Vector2 GetTarget() => GetMousePosInWorld();
+    public override Vector2 GetWhereToAim() => GetMousePosInWorld();
 
 }

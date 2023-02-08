@@ -21,7 +21,7 @@ public class DialogueData : MonoBehaviour
     
     private static readonly int Opened = Animator.StringToHash("Opened");
     
-    private const float MIN_DISTANCE_TO_ENEMY_TO_DISPLAY_TRIGGERED_DIALOGUE = 20f;
+    private const float MIN_DISTANCE_TO_ENEMY_TO_DISPLAY_TRIGGERED_DIALOGUE = 30f;
     
     private void Start()
     {
@@ -43,7 +43,7 @@ public class DialogueData : MonoBehaviour
         boxCloseAnimation = PlayerAnimation.FindAnimation(boxAnimator, "Close");
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (TalkableTriggers.Count == 0 || IsActive || isTooCloseToEnemies()) return;
         

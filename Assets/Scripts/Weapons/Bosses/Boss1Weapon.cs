@@ -11,24 +11,24 @@ public class Boss1Weapon : Weapon
     [SerializeField] private int quantityOfCircles;
     [SerializeField] private float delayBetweenCircles;
 
-    protected override void ShootContainer()
+    protected override void ShootContainer(Vector2 whereToAim)
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
-        Shoot();
+        Shoot(whereToAim);
     }
 
-    protected override void Shoot()
+    protected override void Shoot(Vector2 whereToAim)
     {
-        StartCoroutine(SpawnCirclesWithDelay());
+        StartCoroutine(SpawnCirclesWithDelay(whereToAim));
     }
 
-    IEnumerator SpawnCirclesWithDelay()
+    IEnumerator SpawnCirclesWithDelay(Vector2 whereToAim)
     {
         for (int i = 0; i < quantityOfCircles; i++)
         {
             var randQuantityOfBullets = Random.Range(minBulletsQuantityInOnCircle, maxBulletsQuantityInOnCircle);
-            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(input.GetTarget(), info, 
+            Singleton.Instance.BulletSpawner.SpawnCircleOfBullets(whereToAim, info, 
                 randQuantityOfBullets, 360f, out spawnedBullets);
             ConfigureAfterShot();
             yield return new WaitForSeconds(delayBetweenCircles);
