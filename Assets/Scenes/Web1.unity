@@ -500,7 +500,7 @@ PrefabInstance:
     - target: {fileID: 6637076472283151947, guid: 0c13e337b7f3b4c0480e0f315f95e420, type: 3}
       propertyPath: dialogue
       value: 
-      objectReference: {fileID: 4900000, guid: 710e75825fc744fafaf9ae288e60a7ae, type: 3}
+      objectReference: {fileID: 4900000, guid: 1bc5d6889a9f4d1183cc50f65a2af3dd, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c13e337b7f3b4c0480e0f315f95e420, type: 3}
 --- !u!4 &1313655287 stripped

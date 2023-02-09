@@ -71,20 +71,30 @@ public abstract class Talkable : MonoBehaviour
         lineToOut = "";
         if (currentSymbolInLine + MAX_AMOUNT_CHARACTERS_IN_LINE < lines[currentLine].Length)
         {
-            int latestSpace = 0;
+            int latestSymbol = 0;
 
             for (int i = currentSymbolInLine; i < currentSymbolInLine + MAX_AMOUNT_CHARACTERS_IN_LINE; i++)
             {
-                if (lines[currentLine][i] != ' ') continue;
+                if (lines[currentLine][i] != ',' && lines[currentLine][i] != '.' ) continue;
 
-                latestSpace = i;
+                latestSymbol = i;
             }
 
-            for (int i = currentSymbolInLine; i < latestSpace; i++)
+            if (latestSymbol == 0)
+            {
+                for (int i = currentSymbolInLine; i < currentSymbolInLine + MAX_AMOUNT_CHARACTERS_IN_LINE; i++)
+                {
+                    if (lines[currentLine][i] != ' ' ) continue;
+
+                    latestSymbol = i;
+                }
+            }
+
+            for (int i = currentSymbolInLine; i < latestSymbol; i++)
             {
                 lineToOut += lines[currentLine][i];
             }
-            currentSymbolInLine = latestSpace + 1;
+            currentSymbolInLine = latestSymbol + 1;
             StartCoroutine(DisplayString(lineToOut));
             return false;
         }
