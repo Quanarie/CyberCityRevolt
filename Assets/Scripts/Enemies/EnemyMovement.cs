@@ -64,7 +64,11 @@ public class EnemyMovement : MonoBehaviour
     
     private void MoveOnRoute()
     {
-        if (route == null) return;
+        if (route == null)
+        {
+            info.MoveDirection = Vector2.zero;
+            return;
+        }
         
         Vector3 moveToPoint = routePoints[currentRoutePoint];
         if (Vector3.Distance(moveToPoint, transform.position) < MINIMAL_DISTANCE_TO_POINT)
@@ -115,10 +119,23 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public bool IsTriggered()
+    public bool CanBeTriggered()
     {
         Vector3 plPos = playerTransform.position;
-        float distanceToPlayer = Vector3.Distance(plPos, transform.position);
+        Vector3 closestPointOfRouteToPlayer = transform.position;
+        if (route != null)
+        {
+            for (int i = 0; i < routePoints.Length; i++)
+            {
+                if (Vector3.Distance(routePoints[i], plPos) <
+                    Vector3.Distance(closestPointOfRouteToPlayer, plPos))
+                {
+                    closestPointOfRouteToPlayer = routePoints[i];
+                }
+            }
+        }
+        
+        float distanceToPlayer = Vector3.Distance(closestPointOfRouteToPlayer, plPos);
         return distanceToPlayer < info.TriggerDistance;
     }
 }

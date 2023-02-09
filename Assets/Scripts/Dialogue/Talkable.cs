@@ -8,6 +8,7 @@ public abstract class Talkable : MonoBehaviour
     [SerializeField] private TextAsset dialogue;
     [SerializeField] private Sprite talkingSprite;
     [SerializeField] private bool doesStartWithPlayer;
+    [SerializeField] private bool isStoppingPlayer;
 
     private string[] lines;
     protected int currentLine;
@@ -130,6 +131,10 @@ public abstract class Talkable : MonoBehaviour
     {
         isActive = true;
         Singleton.Instance.DialogueData.InterlocutarAvatar.sprite = talkingSprite;
+        if (isStoppingPlayer)
+        {
+            Singleton.Instance.PlayerData.Input.DeactivateInput();
+        }
         Singleton.Instance.DialogueData.DisplayDialogue();
     }
 
@@ -137,6 +142,10 @@ public abstract class Talkable : MonoBehaviour
     {
         isActive = false;
         StopTyping();
+        if (isStoppingPlayer)
+        {
+            Singleton.Instance.PlayerData.Input.ActivateInput();
+        }
         Singleton.Instance.DialogueData.HideDialogue();
         currentLine = 0;
         currentSymbolInLine = 0;

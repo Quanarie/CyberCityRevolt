@@ -49,11 +49,9 @@ public class DialogueData : MonoBehaviour
         if (isThereTriggeredEnemy())
         {
             Wrapper.alpha = DIALOGUE_ALPHA_WHILE_FIGHTING;
+            return;
         }
-        else
-        {
-            Wrapper.alpha = 1f;
-        }
+        Wrapper.alpha = 1f;
         
         if (TalkableTriggers.Count == 0 || IsActive) return;
         
@@ -64,7 +62,7 @@ public class DialogueData : MonoBehaviour
     {
         foreach (EnemyMovement enemy in EnemySpawner.EnemiesSpawned)
         {
-            if (enemy.IsTriggered()) return true;
+            if (enemy.CanBeTriggered()) return true;
         }
 
         return false;
