@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -18,9 +19,13 @@ public class PlayerAnimation : MonoBehaviour
     private static readonly int Blank = Animator.StringToHash("Blank");
     private static readonly int Die = Animator.StringToHash("Die");
 
-    private void Start()
+    private void Awake()
     {
         FlippedSide = new();
+    }
+
+    private void Start()
+    {
         _tf = transform;
         
         if (!TryGetComponent(out _anim))

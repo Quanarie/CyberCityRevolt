@@ -3,14 +3,14 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyInfo))]
 public class EnemyWeaponInput : WeaponInput
 {
-    protected Transform playerTransform;
-    protected EnemyInfo info;
+    private Transform playerTransform;
+    private EnemyInfo info;
     
-    protected Vector2 target;
+    private Vector2 target;
 
     private void Start()
     {
-        playerTransform = Singleton.Instance.PlayerData.transform;
+        playerTransform = Singleton.Instance.PlayerData.Player.transform;
         info = GetComponent<EnemyInfo>();
     }
 
