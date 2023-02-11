@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private float minDistanceToOtherEnemies;
     [SerializeField] private Transform route;
-    [SerializeField] private float waitOnPointTime;
+    [SerializeField] private float minWaitOnPointTime;
+    [SerializeField] private float maxWaitOnPointTime;
     
     private Rigidbody2D rb;
     private Transform playerTransform;
@@ -42,13 +42,11 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CollideWithOtherEnemies();
-
         Vector3 plPos = playerTransform.position;
 
         float distanceToPlayer = Vector3.Distance(plPos, transform.position);
 
-        if (distanceToPlayer > info.TriggerDistance)
+        if (distanceToPlayer > info.TriggerDistance || info.IsThereObstacleBetweenMeAndPlayer())
         {
             MoveOnRoute();
         }
@@ -91,7 +89,7 @@ public class EnemyMovement : MonoBehaviour
     {
         isWaiting = true;
         info.MoveDirection = Vector2.zero;
-        yield return new WaitForSeconds(waitOnPointTime);
+        yield return new WaitForSeconds(Random.Range(minWaitOnPointTime, maxWaitOnPointTime));
         isWaiting = false;
         SetNextRoutePoint();
     }
@@ -105,20 +103,7 @@ public class EnemyMovement : MonoBehaviour
         }
         currentRoutePoint++;
     }
-
-    private void CollideWithOtherEnemies()
-    {
-        foreach (var col in Physics2D.OverlapCircleAll(transform.position, minDistanceToOtherEnemies))
-        {
-            if (!col.TryGetComponent<EnemyInfo>(out _) || col.gameObject == gameObject) continue;
-
-            Vector3 enPos = col.transform.position;
-            Vector3 myPos = transform.position;
-            Vector2 direction = new Vector2(myPos.x - enPos.x, myPos.y - enPos.y).normalized;
-            rb.MovePosition(rb.position + Time.fixedDeltaTime * direction);
-        }
-    }
-
+    
     public bool CanBeTriggered()
     {
         Vector3 plPos = playerTransform.position;

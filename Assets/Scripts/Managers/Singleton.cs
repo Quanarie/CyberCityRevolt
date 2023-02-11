@@ -1,10 +1,12 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-// Main singleton class that gives access to all managers in the game, which
-// must be its children. The information inside these managers is recommended not to be changed,
-// because a bunch of scripts are dependent on them (etc. getting player data, UI objects)
-// Also every script that wants to get information from any manager must do it in Start method, not Awake
+/// <summary>
+/// Main singleton class that gives access to all managers in the game, which
+/// must be its children. The information inside these managers is recommended not to be changed,
+/// because a bunch of scripts are dependent on them (etc. getting player data, UI objects)
+/// Also every script that wants to get information from any manager must do it in Start method, not Awake
+/// </summary>
 public class Singleton : MonoBehaviour
 {
     public static Singleton Instance { get; private set; }
@@ -13,6 +15,7 @@ public class Singleton : MonoBehaviour
     public DialogueData DialogueData { get; private set; }
     public BulletSpawner BulletSpawner { get; private set; }
     public WeaponInfoManager WeaponInfoManager { get; private set; }
+    public EnemyManager EnemyManager { get; private set; }
 
     private void Awake()
     {
@@ -27,5 +30,6 @@ public class Singleton : MonoBehaviour
         DialogueData = GetComponentInChildren<DialogueData>();
         BulletSpawner = GetComponentInChildren<BulletSpawner>();
         WeaponInfoManager = GetComponentInChildren<WeaponInfoManager>();
+        EnemyManager = GetComponentInChildren<EnemyManager>();
     }
 }

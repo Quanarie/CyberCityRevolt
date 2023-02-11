@@ -18,15 +18,19 @@ public class StagePrefabs : MonoBehaviour, ISpawnable
                 GameObject enemy = Instantiate(enemyPrefabs[i], parent);
                 enemy.transform.position = transform.position + (Vector3)Random.insideUnitCircle * spawnRadius;
                 
+                Singleton.Instance.EnemyManager.AddEnemyToLists(enemy);
                 EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
-                EnemySpawner.EnemiesSpawned.Add(enemyMovement);
-                enemyHealth.Dying.AddListener(() => EnemySpawner.EnemiesSpawned.Remove(enemyMovement));
                 enemyHealth.Dying.AddListener(() => amountOfDeadEnemies++);
+                
                 amountOfSpawnedEnemies++;
             }
         }
     }
 
     public bool IsDone() => amountOfSpawnedEnemies == amountOfDeadEnemies;
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+    }
 }

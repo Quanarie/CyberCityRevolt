@@ -60,7 +60,7 @@ public class DialogueData : MonoBehaviour
 
     private bool isThereTriggeredEnemy()
     {
-        foreach (EnemyMovement enemy in EnemySpawner.EnemiesSpawned)
+        foreach (EnemyMovement enemy in Singleton.Instance.EnemyManager.EnemiesSpawnedMovements)
         {
             if (enemy.CanBeTriggered()) return true;
         }

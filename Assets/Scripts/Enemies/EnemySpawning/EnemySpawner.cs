@@ -6,7 +6,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject[] stages;
     [SerializeField] private Transform enemyParent;
 
-    public static List<EnemyMovement> EnemiesSpawned = new();
     public static bool IsLevelComplete { get; private set; }
     
     private int currentStageNumber = 0;

@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     
     private Vector2 input;
-    private Vector2 nonZeroInput;
+    private Vector2 nonZeroInput = Vector2.up;
     private Vector2 rollingInput;
     private bool isRolling;
     
