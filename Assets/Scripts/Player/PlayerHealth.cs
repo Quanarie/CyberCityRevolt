@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : Health
 {
@@ -34,9 +35,6 @@ public class PlayerHealth : Health
     public void Respawn()
     {
         Singleton.Instance.PlayerData.Input.ActivateInput();
-        transform.position = _spawnPoint;
-        currentHitPoints = maxHitPoints;
-        isDying = false;
-        ChangedHp?.Invoke(currentHitPoints);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

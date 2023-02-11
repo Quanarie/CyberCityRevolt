@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -10,8 +11,8 @@ public class PlayerWeaponHandler : MonoBehaviour
     [SerializeField] private Vector2 weaponOffset;
 
     private Weapon currentWeapon;
-    private static List<Weapon> weaponsOnFloor = new ();
-
+    private static List<Weapon> weaponsOnFloor;
+    
     public static void StoreWeapon(Weapon toStore)
     {
         if (weaponsOnFloor.Contains(toStore)) return;
@@ -23,6 +24,7 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private void Start()
     {
+        weaponsOnFloor = new ();
         currentWeapon = GetComponentInChildren<Weapon>();
         currentWeapon.transform.localPosition = weaponOffset;
     }

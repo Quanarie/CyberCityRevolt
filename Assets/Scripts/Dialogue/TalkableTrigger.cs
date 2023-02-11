@@ -7,7 +7,7 @@ public class TalkableTrigger : Talkable
 
     private void Update()
     {
-        if (PauseMenuManager.IsPaused || !isActive) return;
+        if (Singleton.Instance.StateManager.CurrentState == State.Paused || !isActive) return;
 
         if (Keyboard.current.qKey.wasPressedThisFrame && isActive)
         {
@@ -31,24 +31,18 @@ public class TalkableTrigger : Talkable
         }
     }
 
-    public void Trigger()
-    {
-        DisplayDialogue();
-        isActive = true;
-            
-        if (TryDisplayCurrentLine())
-        {
-            currentLine++;
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.TryGetComponent<PlayerMovement>(out _)) return;
 
         if (!wasActivated)
         {
-            Singleton.Instance.DialogueData.TalkableTriggers.Enqueue(this);
+            DisplayDialogue();
+            
+            if (TryDisplayCurrentLine())
+            {
+                currentLine++;
+            }
             wasActivated = true;
         }
     }

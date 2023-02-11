@@ -8,7 +8,6 @@ public abstract class Talkable : MonoBehaviour
     [SerializeField] private TextAsset dialogue;
     [SerializeField] private Sprite talkingSprite;
     [SerializeField] private bool doesStartWithPlayer;
-    [SerializeField] private bool isStoppingPlayer;
 
     private string[] lines;
     protected int currentLine;
@@ -21,8 +20,6 @@ public abstract class Talkable : MonoBehaviour
     protected string lineToOut;
     protected bool isActive = false;
 
-    private static List<Talkable> talkableCharacters = new();
-
     private void Start()
     {
         lines = dialogue.text.Split("\n"[0]);
@@ -34,7 +31,6 @@ public abstract class Talkable : MonoBehaviour
         
         currentLine = 0;
         text = Singleton.Instance.DialogueData.Text;
-        talkableCharacters.Add(this);
     }
 
     protected bool TryDisplayCurrentLine()
@@ -91,7 +87,7 @@ public abstract class Talkable : MonoBehaviour
                 }
             }
 
-            for (int i = currentSymbolInLine; i < latestSymbol; i++)
+            for (int i = currentSymbolInLine; i <= latestSymbol; i++)
             {
                 lineToOut += lines[currentLine][i];
             }
@@ -129,23 +125,17 @@ public abstract class Talkable : MonoBehaviour
     
     protected void DisplayDialogue()
     {
+        Singleton.Instance.StateManager.EnterDialogue();
         isActive = true;
         Singleton.Instance.DialogueData.InterlocutarAvatar.sprite = talkingSprite;
-        if (isStoppingPlayer)
-        {
-            Singleton.Instance.PlayerData.Input.DeactivateInput();
-        }
         Singleton.Instance.DialogueData.DisplayDialogue();
     }
 
     protected void HideDialogue()
     {
+        Singleton.Instance.StateManager.LeaveDialogue();
         isActive = false;
         StopTyping();
-        if (isStoppingPlayer)
-        {
-            Singleton.Instance.PlayerData.Input.ActivateInput();
-        }
         Singleton.Instance.DialogueData.HideDialogue();
         currentLine = 0;
         currentSymbolInLine = 0;

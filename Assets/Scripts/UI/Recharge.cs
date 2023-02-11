@@ -14,7 +14,7 @@ public class Recharge : MonoBehaviour
         Singleton.Instance.PlayerData.Player.GetComponent<PlayerWeaponHandler>().
             ChangedWeapon.AddListener(WeaponChanged);
         // This Event fixes bu_g where you see one frame when recharge line is not Flipped correctly
-        PlayerAnimation.FlippedSide.AddListener(FlipSide);
+        Singleton.Instance.PlayerData.Animation.FlippedSide.AddListener(FlipSide);
     }
 
     private void Update()

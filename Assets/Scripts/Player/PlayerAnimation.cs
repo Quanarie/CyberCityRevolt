@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    public static readonly UnityEvent FlippedSide = new();
+    public UnityEvent FlippedSide;
     
     private Transform _tf;
     private Animator _anim;
@@ -20,6 +20,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Start()
     {
+        FlippedSide = new();
         _tf = transform;
         
         if (!TryGetComponent(out _anim))

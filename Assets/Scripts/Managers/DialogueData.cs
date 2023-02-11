@@ -6,13 +6,11 @@ using TMPro;
 
 public class DialogueData : MonoBehaviour
 {
-    [field : SerializeField] public CanvasGroup Wrapper { get; private set; }
     [field : SerializeField] public GameObject Box { get; private set; }
     [field : SerializeField] public TextMeshProUGUI Text { get; private set; }
     [field : SerializeField] public Image InterlocutarAvatar { get; private set; }
     [field : SerializeField] public Image PlayerAvatar { get; private set; }
     
-    public Queue<TalkableTrigger> TalkableTriggers { get; set; } = new();
     public bool IsActive { get; private set; }
 
     private Animator boxAnimator;
@@ -21,8 +19,6 @@ public class DialogueData : MonoBehaviour
     private AnimationClip boxCloseAnimation;
     
     private static readonly int Opened = Animator.StringToHash("Opened");
-    
-    private const float DIALOGUE_ALPHA_WHILE_FIGHTING = 0.4f;
     
     private void Start()
     {
@@ -42,30 +38,6 @@ public class DialogueData : MonoBehaviour
         }
 
         boxCloseAnimation = PlayerAnimation.FindAnimation(boxAnimator, "Close");
-    }
-
-    private void Update()
-    {
-        if (isThereTriggeredEnemy())
-        {
-            Wrapper.alpha = DIALOGUE_ALPHA_WHILE_FIGHTING;
-            return;
-        }
-        Wrapper.alpha = 1f;
-        
-        if (TalkableTriggers.Count == 0 || IsActive) return;
-        
-        TalkableTriggers.Dequeue().Trigger();
-    }
-
-    private bool isThereTriggeredEnemy()
-    {
-        foreach (EnemyMovement enemy in Singleton.Instance.EnemyManager.EnemiesSpawnedMovements)
-        {
-            if (enemy.CanBeTriggered()) return true;
-        }
-
-        return false;
     }
 
     public void DisplayDialogue()

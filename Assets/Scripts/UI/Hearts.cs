@@ -7,10 +7,11 @@ public class Hearts : MonoBehaviour
     [SerializeField] private GameObject halfHeartPrefab;
     [SerializeField] private float distanceBetweenHearts;
 
-    private List<GameObject> hearts = new();
+    private List<GameObject> hearts;
     
     private void Start()
     {
+        hearts = new();
         Singleton.Instance.PlayerData.Health.ChangedHp.AddListener(ChangeHearts);
         SpawnHearts(Singleton.Instance.PlayerData.Health.GetMaxHp());
     }

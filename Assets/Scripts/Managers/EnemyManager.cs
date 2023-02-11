@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
-    [HideInInspector] public List<EnemyMovement> EnemiesSpawnedMovements = new();
+    [HideInInspector] public List<EnemyMovement> EnemiesSpawnedMovements;
 
     private void Start()
     {
-        foreach (EnemyMovement enemy in FindObjectsByType<EnemyMovement>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        EnemiesSpawnedMovements = new();
+        foreach (EnemyMovement enemy in FindObjectsByType<EnemyMovement>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
         {
             AddEnemyToLists(enemy.gameObject);
         }

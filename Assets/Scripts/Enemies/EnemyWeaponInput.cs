@@ -10,7 +10,7 @@ public class EnemyWeaponInput : WeaponInput
 
     private void Start()
     {
-        playerTransform = Singleton.Instance.PlayerData.Player.transform;
+        playerTransform = Singleton.Instance.PlayerData.transform;
         info = GetComponent<EnemyInfo>();
     }
 

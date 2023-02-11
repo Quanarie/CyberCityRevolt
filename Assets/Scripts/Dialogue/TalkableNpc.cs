@@ -7,17 +7,15 @@ public class TalkableNpc : Talkable
     
     private void Update()
     {
-        if (PauseMenuManager.IsPaused) return;
-
-        if (Singleton.Instance.DialogueData.IsActive && !isActive) return;
+        if (Singleton.Instance.StateManager.CurrentState == State.Paused ||
+            Singleton.Instance.NpcManager.FindClosestNpcToPlayer() != this) return;
 
         var plPos = Singleton.Instance.PlayerData.Player.transform.position;
-        if (Vector3.Distance(plPos, transform.position) > triggerDistance)
+        if (Vector3.Distance(plPos, transform.position) > triggerDistance) return;
+        
+        if (Keyboard.current.qKey.wasPressedThisFrame && isActive)
         {
-            if (isActive)
-            {
-                HideDialogue();
-            }
+            HideDialogue();
             return;
         }
 
