@@ -1,9 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TalkableTrigger : Talkable
+public class TalkableDependentOnStage : Talkable
 {
+    [SerializeField] private int stageShouldBeDone;
     private bool wasActivated = false;
+
+    protected override void Start()
+    {
+        base.Start();
+        Singleton.Instance.EnemySpawner.StageChanged.AddListener(TryActivate);
+    }
 
     protected virtual void Update()
     {
@@ -23,7 +30,7 @@ public class TalkableTrigger : Talkable
                 text.text = lineToOut;
                 return;
             }
-            
+
             if (TryDisplayCurrentLine())
             {
                 currentLine++;
@@ -31,18 +38,18 @@ public class TalkableTrigger : Talkable
         }
     }
 
-    protected virtual void OnTriggerStay2D(Collider2D col)
+    private void TryActivate()
     {
-        if (!col.TryGetComponent<PlayerMovement>(out _) || wasActivated ||
-            Singleton.Instance.DialogueData.IsActive) return;
-
+        if (Singleton.Instance.DialogueData.IsActive || wasActivated ||
+            !Singleton.Instance.EnemySpawner.IsStageDone(stageShouldBeDone)) return;
+        
         Singleton.Instance.BulletSpawner.DestroyAllBullets();
         DisplayDialogue();
-            
         if (TryDisplayCurrentLine())
         {
             currentLine++;
         }
         wasActivated = true;
     }
+
 }

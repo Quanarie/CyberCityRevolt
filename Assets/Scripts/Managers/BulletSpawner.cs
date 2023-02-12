@@ -30,4 +30,13 @@ public class BulletSpawner : MonoBehaviour
             currentAngle += differenceAngle;
         }
     }
+
+    public void DestroyAllBullets()
+    {
+        Bullet[] allBullets = FindObjectsOfType<Bullet>();
+        for (int i = 0; i < allBullets.Length; i++)
+        {
+            allBullets[i].DestroyBullet();
+        }
+    }
 }

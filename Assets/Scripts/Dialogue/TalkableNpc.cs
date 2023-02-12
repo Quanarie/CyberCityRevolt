@@ -23,6 +23,7 @@ public class TalkableNpc : Talkable
         {
             if (!isActive)
             {
+                if (Singleton.Instance.DialogueData.IsActive) return;
                 DisplayDialogue();
             }
 

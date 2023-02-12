@@ -20,7 +20,7 @@ public abstract class Talkable : MonoBehaviour
     protected string lineToOut;
     protected bool isActive = false;
 
-    private void Start()
+    protected virtual void Start()
     {
         lines = dialogue.text.Split("\n"[0]);
 

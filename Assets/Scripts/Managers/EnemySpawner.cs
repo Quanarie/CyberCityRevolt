@@ -3,7 +3,6 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [HideInInspector] public UnityEvent LevelComplete;
     [HideInInspector] public UnityEvent StageChanged;
     
     [SerializeField] private GameObject[] stagesContainers;
@@ -33,10 +32,11 @@ public class EnemySpawner : MonoBehaviour
         if (currentStageNumber == stagesContainers.Length - 1)
         {
             currentStageNumber++;
-            LevelComplete?.Invoke();
+            StageChanged?.Invoke();
             return;
         }
         
+        currentStageNumber++;
         SpawnEnemies(stagesContainers[currentStageNumber]);
         StageChanged?.Invoke();
     }

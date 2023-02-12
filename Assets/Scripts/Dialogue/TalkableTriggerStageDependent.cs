@@ -11,12 +11,10 @@ public class TalkableTriggerStageDependent : TalkableTrigger
         base.Update();
     }
 
-    private void OnTriggerStay2D(Collider2D col) => OnTriggerEnter2D(col);
-
-    protected override void OnTriggerEnter2D(Collider2D col)
+    protected override void OnTriggerStay2D(Collider2D col)
     {
         if (!Singleton.Instance.EnemySpawner.IsStageDone(stageShouldBeDone)) return;
         
-        base.OnTriggerEnter2D(col);
+        base.OnTriggerStay2D(col);
     }
 }

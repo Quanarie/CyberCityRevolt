@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,6 +16,7 @@ public class DialogueData : MonoBehaviour
     private Animator interlocutarAvatarAnimator;
     private Animator playerAvatarAnimator;
     private AnimationClip boxCloseAnimation;
+
     
     private static readonly int Opened = Animator.StringToHash("Opened");
     
