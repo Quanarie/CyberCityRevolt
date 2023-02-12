@@ -3,9 +3,10 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private GameObject enemySpawnedParticles;
     [HideInInspector] public UnityEvent StageChanged;
     
-    [SerializeField] private GameObject[] stagesContainers;
+    private GameObject[] stagesContainers;
 
     private int currentStageNumber = 0;
     private int amountOfSpawnedEnemiesCurrStage = 0;
@@ -13,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        stagesContainers = GameObject.FindGameObjectsWithTag("Stage");
+        
         foreach (GameObject stage in stagesContainers)
         {
             for (int i = 0; i < stage.transform.childCount; i++)
@@ -49,6 +52,7 @@ public class EnemySpawner : MonoBehaviour
         {
             GameObject enemy = stageContainer.transform.GetChild(i).gameObject;
             enemy.SetActive(true);
+            Instantiate(enemySpawnedParticles, enemy.transform.position, enemy.transform.rotation);
             if (!enemy.TryGetComponent(out EnemyHealth enemyHealth))
             {
                 Debug.LogError("No health component on: " + enemy.name);

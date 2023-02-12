@@ -13,11 +13,11 @@ public class Singleton : MonoBehaviour
     
     public PlayerData PlayerData { get; private set; }
     public DialogueData DialogueData { get; private set; }
-    public BulletSpawner BulletSpawner { get; private set; }
     public WeaponInfoManager WeaponInfoManager { get; private set; }
     public StateManager StateManager { get; private set; }
     public NpcManager NpcManager { get; private set; }
     public EnemySpawner EnemySpawner { get; private set; }
+    public BulletManager BulletManager { get; private set; }
 
     private void Awake()
     {
@@ -30,10 +30,10 @@ public class Singleton : MonoBehaviour
         
         PlayerData = GetComponentInChildren<PlayerData>();
         DialogueData = GetComponentInChildren<DialogueData>();
-        BulletSpawner = GetComponentInChildren<BulletSpawner>();
         WeaponInfoManager = GetComponentInChildren<WeaponInfoManager>();
         StateManager = GetComponentInChildren<StateManager>();
         NpcManager = GetComponentInChildren<NpcManager>();
         EnemySpawner = GetComponentInChildren<EnemySpawner>();
+        BulletManager = GetComponentInChildren<BulletManager>();
     }
 }

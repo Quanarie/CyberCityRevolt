@@ -9,17 +9,17 @@ using UnityEngine;
 /// </summary>
 public abstract class Weapon : MonoBehaviour
 {
-    protected CameraMovement cam;
-    [SerializeField] protected float cameraShakeDuration;
-    [SerializeField] protected float cameraShakeMagnitude;
+    private CameraMovement cam;
+    [SerializeField] private float cameraShakeDuration;
+    [SerializeField] private float cameraShakeMagnitude;
     
     [SerializeField] protected WeaponInfo info;
     
     protected Bullet[] spawnedBullets;
-    protected WeaponInput input;
+    private WeaponInput input;
     
-    protected float timeElapsedFromLastShot = 0f;
-    protected bool isOnPlayer;
+    private float timeElapsedFromLastShot = 0f;
+    private bool isOnPlayer;
 
     public bool isDropped { get; protected set; }
     public float GetRechargeTime() => info.rechargeTime;
@@ -34,7 +34,7 @@ public abstract class Weapon : MonoBehaviour
                                                         + " of weapon: " + gameObject.name);
         }
         
-        input.Shoot.AddListener(ShootContainer);
+        input.Shoot.AddListener(Shoot);
         isOnPlayer = transform.parent.TryGetComponent<PlayerMovement>(out _);
         
         if (!Camera.main.TryGetComponent(out cam))
@@ -57,7 +57,7 @@ public abstract class Weapon : MonoBehaviour
         StopAllCoroutines();
         PlayerWeaponHandler.StoreWeapon(this);
         transform.SetParent(null);
-        input.Shoot.RemoveListener(ShootContainer);
+        input.Shoot.RemoveListener(Shoot);
         isDropped = true;
     }
     
@@ -105,63 +105,18 @@ public abstract class Weapon : MonoBehaviour
         transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
     }
     
-    protected virtual void ShootContainer(Vector2 whereToAim)
+    private void Shoot(Vector2 whereToAim)
     {
         if (timeElapsedFromLastShot < info.rechargeTime) return;
         
-        Shoot(whereToAim);
+        SpawnBullets(whereToAim);
         if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
-        SetLayerBullets();
-        OrientBullets();
+        Singleton.Instance.BulletManager.ConfigureBullets(spawnedBullets, isOnPlayer);
         timeElapsedFromLastShot = 0;
     }
 
     /// <summary>
     /// Child must stack all bullets that it spawns is SpawnedBullets array
     /// </summary> 
-    protected abstract void Shoot(Vector2 whereToAim);
-    
-    private void SetLayerBullets()
-    {
-        if (spawnedBullets == null) return;
-        
-        foreach (var bullet in spawnedBullets)
-        {
-            if (isOnPlayer)
-            {
-                bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
-            }
-            else
-            {
-                bullet.gameObject.layer = LayerMask.NameToLayer("EnemyBullet");
-            }
-        }
-    }
-
-    private void OrientBullets()
-    {
-        if (spawnedBullets == null) return;
-        
-        foreach (var bullet in spawnedBullets)
-        {
-            Vector3 aimDirection = bullet.GetComponent<Rigidbody2D>().velocity;
-            float aimAngle = Mathf.Atan(aimDirection.y / aimDirection.x) * Mathf.Rad2Deg;
-            
-            Vector3 rot = bullet.transform.rotation.eulerAngles;
-            bullet.transform.rotation = Quaternion.Euler(rot.x, rot.y, aimAngle);
-
-            if (aimDirection.x > 0f) continue;
-            
-            Vector3 bScale = bullet.transform.localScale;
-            bullet.transform.localScale = new Vector3(-Mathf.Abs(bScale.x), bScale.y, bScale.z);
-        }
-    }
-    
-    protected void ConfigureAfterShot()
-    {
-        SetLayerBullets();
-        OrientBullets();
-        if (isOnPlayer) cam.Shake(cameraShakeDuration, cameraShakeMagnitude);
-        timeElapsedFromLastShot = 0f;
-    }
+    protected abstract void SpawnBullets(Vector2 whereToAim);
 }

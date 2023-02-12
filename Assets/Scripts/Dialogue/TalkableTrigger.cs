@@ -36,7 +36,7 @@ public class TalkableTrigger : Talkable
         if (!col.TryGetComponent<PlayerMovement>(out _) || wasActivated ||
             Singleton.Instance.DialogueData.IsActive) return;
 
-        Singleton.Instance.BulletSpawner.DestroyAllBullets();
+        Singleton.Instance.BulletManager.DestroyAllBullets();
         DisplayDialogue();
             
         if (TryDisplayCurrentLine())

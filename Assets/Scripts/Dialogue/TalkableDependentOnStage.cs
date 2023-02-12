@@ -43,7 +43,7 @@ public class TalkableDependentOnStage : Talkable
         if (Singleton.Instance.DialogueData.IsActive || wasActivated ||
             !Singleton.Instance.EnemySpawner.IsStageDone(stageShouldBeDone)) return;
         
-        Singleton.Instance.BulletSpawner.DestroyAllBullets();
+        Singleton.Instance.BulletManager.DestroyAllBullets();
         DisplayDialogue();
         if (TryDisplayCurrentLine())
         {

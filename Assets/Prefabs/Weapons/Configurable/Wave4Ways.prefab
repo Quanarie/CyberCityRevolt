@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8137207657203481755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8137207657203481732}
+  - component: {fileID: 8137207657203481733}
+  - component: {fileID: 8137207657203481728}
+  - component: {fileID: 8137207657203481734}
+  - component: {fileID: 8137207657203481735}
+  m_Layer: 0
+  m_Name: Wave4Ways
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8137207657203481732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8137207657203481755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.89, y: 2.67, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8137207657203481733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8137207657203481755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1541d88ffe334742b5295c96c8b33402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1584635873586827209, guid: d51bb31fe182b4470ab1c4bcc4d433bf, type: 3}
+  damage: 0
+  bulletSpeed: 3
+  period: 8
+  elapsedSinceLastShot: 3
+  howManyBullets: 50
+  howManySinPeriods: 2
+  timeBetweenBullets: 0.1
+  angle: 0
+--- !u!114 &8137207657203481728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8137207657203481755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1541d88ffe334742b5295c96c8b33402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1584635873586827209, guid: d51bb31fe182b4470ab1c4bcc4d433bf, type: 3}
+  damage: 0
+  bulletSpeed: 3
+  period: 8
+  elapsedSinceLastShot: 3
+  howManyBullets: 50
+  howManySinPeriods: 2
+  timeBetweenBullets: 0.1
+  angle: 90
+--- !u!114 &8137207657203481734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8137207657203481755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1541d88ffe334742b5295c96c8b33402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1584635873586827209, guid: d51bb31fe182b4470ab1c4bcc4d433bf, type: 3}
+  damage: 0
+  bulletSpeed: 3
+  period: 8
+  elapsedSinceLastShot: 3
+  howManyBullets: 50
+  howManySinPeriods: 2
+  timeBetweenBullets: 0.1
+  angle: 180
+--- !u!114 &8137207657203481735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8137207657203481755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1541d88ffe334742b5295c96c8b33402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1584635873586827209, guid: d51bb31fe182b4470ab1c4bcc4d433bf, type: 3}
+  damage: 0
+  bulletSpeed: 3
+  period: 8
+  elapsedSinceLastShot: 3
+  howManyBullets: 50
+  howManySinPeriods: 2
+  timeBetweenBullets: 0.1
+  angle: 270
