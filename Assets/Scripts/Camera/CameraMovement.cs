@@ -33,6 +33,7 @@ public class CameraMovement : MonoBehaviour
 
     private IEnumerator ShakeCor(float dur, float magn)
     {
+        Vector3 originalPos = transform.position;
         float elapsed = 0f;
         
         while (elapsed < dur)
@@ -46,5 +47,7 @@ public class CameraMovement : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return 0;
         }
+
+        transform.position = originalPos;
     }
 }

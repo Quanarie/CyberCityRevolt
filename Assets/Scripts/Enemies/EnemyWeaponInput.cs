@@ -8,8 +8,9 @@ public class EnemyWeaponInput : WeaponInput
     
     private Vector2 target;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         playerTransform = Singleton.Instance.PlayerData.Player.transform;
         info = GetComponent<EnemyInfo>();
     }

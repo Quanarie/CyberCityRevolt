@@ -8,6 +8,17 @@ public abstract class WeaponInput : MonoBehaviour
     /// </summary>
     [HideInInspector] public UnityEvent<Vector2> Shoot;
 
+    [field : SerializeField] public Vector2 WeaponOffset { get; private set; }
+
     /// <returns> Place where weapon should be pointing </returns>
     public abstract Vector2 GetWhereToAim();
+
+    protected virtual void Start()
+    {
+        Weapon weapon = GetComponentInChildren<Weapon>();
+        if (weapon != null)
+        {
+            weapon.gameObject.transform.localPosition = WeaponOffset;
+        }
+    }
 }

@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     
     public void OnRoll(InputValue value)
     {
-        if (isRolling || _timeFromLastRoll < rollRechargeTime) return;
+        if (isRolling || _timeFromLastRoll < rollRechargeTime || input == Vector2.zero) return;
 
         StartedRolling?.Invoke();
         isRolling = true;

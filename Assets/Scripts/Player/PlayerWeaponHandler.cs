@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -7,8 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerWeaponHandler : MonoBehaviour
 {
     [HideInInspector] public UnityEvent ChangedWeapon;
-
-    [SerializeField] private Vector2 weaponOffset;
 
     private Weapon currentWeapon;
     private static List<Weapon> weaponsOnFloor;
@@ -26,7 +23,6 @@ public class PlayerWeaponHandler : MonoBehaviour
     {
         weaponsOnFloor = new ();
         currentWeapon = GetComponentInChildren<Weapon>();
-        currentWeapon.transform.localPosition = weaponOffset;
     }
     
     private void Update()
@@ -48,7 +44,6 @@ public class PlayerWeaponHandler : MonoBehaviour
         
         currentWeapon.DropWeapon();
         closestWeapon.PickupWeapon(transform);
-        closestWeapon.transform.localPosition = weaponOffset;
         currentWeapon = closestWeapon;
         ChangedWeapon?.Invoke();
     }

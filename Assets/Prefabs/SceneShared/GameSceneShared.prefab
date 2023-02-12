@@ -580,7 +580,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e84c840adc904574a3205b9dca33a3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Wrapper>k__BackingField: {fileID: 265540874011459592}
   <Box>k__BackingField: {fileID: 3654945584037660674}
   <Text>k__BackingField: {fileID: 3654945584616368560}
   <InterlocutarAvatar>k__BackingField: {fileID: 3654945582668187971}
@@ -1731,6 +1730,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28396a7d88ed2431ea9a4b6aed22e2b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FlippedSide:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3654945583003789938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1782,6 +1784,7 @@ MonoBehaviour:
   Shoot:
     m_PersistentCalls:
       m_Calls: []
+  <WeaponOffset>k__BackingField: {x: 0.16, y: 0.16}
 --- !u!114 &3654945583003789941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1797,7 +1800,6 @@ MonoBehaviour:
   ChangedWeapon:
     m_PersistentCalls:
       m_Calls: []
-  weaponOffset: {x: 0.225, y: 0.2}
 --- !u!1 &3654945583036468928
 GameObject:
   m_ObjectHideFlags: 0

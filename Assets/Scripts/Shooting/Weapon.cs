@@ -65,6 +65,7 @@ public abstract class Weapon : MonoBehaviour
     {
         PlayerWeaponHandler.RemoveWeapon(this);
         transform.SetParent(parent);
+        transform.localPosition = input.WeaponOffset;
         isDropped = false;
         Start();
     }
