@@ -5,7 +5,7 @@ public class TalkableTrigger : Talkable
 {
     private bool wasActivated = false;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (Singleton.Instance.StateManager.CurrentState == State.Paused || !isActive) return;
 
@@ -31,7 +31,7 @@ public class TalkableTrigger : Talkable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    protected virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.TryGetComponent<PlayerMovement>(out _)) return;
 

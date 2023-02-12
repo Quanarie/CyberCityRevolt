@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [HideInInspector] public UnityEvent LevelComplete;
+    [HideInInspector] public UnityEvent StageChanged;
+    
     [SerializeField] private GameObject[] stagesContainers;
 
     private int currentStageNumber = 0;
@@ -23,14 +27,21 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (amountOfSpawnedEnemiesCurrStage != amountOfDeadEnemiesCurrStage || 
-            currentStageNumber == stagesContainers.Length - 1) return;
+        if (currentStageNumber == stagesContainers.Length) return;
+        if (amountOfSpawnedEnemiesCurrStage != amountOfDeadEnemiesCurrStage) return;
+
+        if (currentStageNumber == stagesContainers.Length - 1)
+        {
+            currentStageNumber++;
+            LevelComplete?.Invoke();
+            return;
+        }
         
-        currentStageNumber++;
         SpawnEnemies(stagesContainers[currentStageNumber]);
+        StageChanged?.Invoke();
     }
     
-    public void SpawnEnemies(GameObject stageContainer)
+    private void SpawnEnemies(GameObject stageContainer)
     {
         amountOfDeadEnemiesCurrStage = 0;
         amountOfSpawnedEnemiesCurrStage = 0;
@@ -38,7 +49,6 @@ public class EnemySpawner : MonoBehaviour
         {
             GameObject enemy = stageContainer.transform.GetChild(i).gameObject;
             enemy.SetActive(true);
-            Singleton.Instance.EnemyManager.AddEnemyToLists(enemy);
             if (!enemy.TryGetComponent(out EnemyHealth enemyHealth))
             {
                 Debug.LogError("No health component on: " + enemy.name);
@@ -47,4 +57,6 @@ public class EnemySpawner : MonoBehaviour
             amountOfSpawnedEnemiesCurrStage++;
         }
     }
+
+    public bool IsStageDone(int stageIndex) => stageIndex < currentStageNumber;
 }

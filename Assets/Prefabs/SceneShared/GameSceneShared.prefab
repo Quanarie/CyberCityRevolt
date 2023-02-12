@@ -298,7 +298,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3654945584397646114}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &764420176
 MonoBehaviour:
@@ -342,7 +342,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3654945584397646114}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1344192297
 MonoBehaviour:
@@ -491,7 +491,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &741938377472909071
+--- !u!1 &1481195093661401937
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -499,43 +499,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1988530255914778967}
-  - component: {fileID: 68411044100043133}
+  - component: {fileID: 1481195093661401936}
+  - component: {fileID: 1481195093661401939}
   m_Layer: 0
-  m_Name: EnemyManager
+  m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1988530255914778967
+--- !u!4 &1481195093661401936
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 741938377472909071}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 1481195093661401937}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3654945584397646114}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &68411044100043133
+--- !u!114 &1481195093661401939
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 741938377472909071}
+  m_GameObject: {fileID: 1481195093661401937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44f84061729b4d64b7c77baa0b9db964, type: 3}
+  m_Script: {fileID: 11500000, guid: 533398ace176b4b05975112190838ca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemiesSpawnedMovements: []
+  stagesContainers:
+  - {fileID: 0}
 --- !u!1 &2942550575100033744
 GameObject:
   m_ObjectHideFlags: 0
@@ -3631,9 +3632,9 @@ Transform:
   - {fileID: 3654945583685250594}
   - {fileID: 3654945584522925551}
   - {fileID: 6052898006667878592}
-  - {fileID: 1988530255914778967}
   - {fileID: 764420175}
   - {fileID: 1344192296}
+  - {fileID: 1481195093661401936}
   m_Father: {fileID: 3654945583526865498}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
