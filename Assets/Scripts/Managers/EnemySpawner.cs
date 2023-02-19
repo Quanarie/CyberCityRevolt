@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemySpawnedParticles;
     [HideInInspector] public UnityEvent StageChanged;
+    [HideInInspector] public List<GameObject> EnemiesActive;
     
     private GameObject[] stagesContainers;
 
@@ -57,6 +60,10 @@ public class EnemySpawner : MonoBehaviour
             {
                 Debug.LogError("No health component on: " + enemy.name);
             }
+            
+            EnemiesActive.Add(enemy);
+            enemyHealth.Dying.AddListener(() => EnemiesActive.Remove(enemy));
+
             enemyHealth.Dying.AddListener(() => amountOfDeadEnemiesCurrStage++);
             amountOfSpawnedEnemiesCurrStage++;
         }

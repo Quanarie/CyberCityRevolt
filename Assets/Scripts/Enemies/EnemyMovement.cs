@@ -1,21 +1,26 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyInfo))]
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private Transform route;
-    [SerializeField] private float minWaitOnPointTime;
-    [SerializeField] private float maxWaitOnPointTime;
-    
     private Rigidbody2D rb;
     private Transform playerTransform;
     private EnemyInfo info;
+    
+    [SerializeField] private Transform route;
+    [SerializeField] private float minWaitOnPointTime;
+    [SerializeField] private float maxWaitOnPointTime;
     private Vector3[] routePoints;
     private int currentRoutePoint = 0;
     private const float MINIMAL_DISTANCE_TO_POINT = 0.1f;
     private bool isWaiting = false;
+
+    [SerializeField] private float timeToChangeEnemyToGoAwayFrom;
+    private GameObject currentEnemyToGoAwayFrom;
+    private float elapsedSinceEnemyToGoAwayFromChange = 0f;
 
     private void Start()
     {
@@ -58,6 +63,8 @@ public class EnemyMovement : MonoBehaviour
         {
             info.MoveDirection = Vector2.zero;
         }
+
+        elapsedSinceEnemyToGoAwayFromChange += Time.fixedDeltaTime;
     }
     
     private void MoveOnRoute()
@@ -81,8 +88,49 @@ public class EnemyMovement : MonoBehaviour
     
     private void MoveTo(Vector3 destination)
     {
-        info.MoveDirection = destination - transform.position;
+        if (elapsedSinceEnemyToGoAwayFromChange > timeToChangeEnemyToGoAwayFrom)
+        {
+            currentEnemyToGoAwayFrom = GetClosestEnemy();
+            elapsedSinceEnemyToGoAwayFromChange = 0f;
+        }
+        
+        Vector2 toDest = (destination - transform.position).normalized;
+        if (currentEnemyToGoAwayFrom == null)
+        {
+            info.MoveDirection = toDest;
+        }
+        else
+        {
+            Vector2 fromEnemy = (transform.position - currentEnemyToGoAwayFrom.transform.position).normalized;
+            fromEnemy /= Vector3.Distance(transform.position, currentEnemyToGoAwayFrom.transform.position);
+            info.MoveDirection = toDest + fromEnemy;
+        }
+        
         rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * info.MoveDirection.normalized);
+    }
+    
+    public GameObject GetClosestEnemy()
+    {
+        List<GameObject> enemies = Singleton.Instance.EnemySpawner.EnemiesActive;
+        if (enemies.Count <= 1) return null;
+        
+        GameObject closestEnemy = null;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] == gameObject) continue;
+
+            if (closestEnemy == null)
+            {
+                closestEnemy = enemies[i];
+            }
+            else if (Vector3.Distance(transform.position, enemies[i].transform.position) < 
+                     Vector3.Distance(transform.position, closestEnemy.transform.position))
+            {
+                closestEnemy = enemies[i];
+            }
+        }
+
+        return closestEnemy;
     }
 
     IEnumerator WaitAndSetNextPoint()

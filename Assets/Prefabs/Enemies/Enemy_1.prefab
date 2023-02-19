@@ -208,6 +208,7 @@ MonoBehaviour:
   route: {fileID: 1691306540643485886}
   minWaitOnPointTime: 0.2
   maxWaitOnPointTime: 1
+  timeToChangeEnemyToGoAwayFrom: 1
 --- !u!114 &23134074348054102
 MonoBehaviour:
   m_ObjectHideFlags: 0
