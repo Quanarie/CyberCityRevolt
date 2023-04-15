@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -28,14 +27,32 @@ public abstract class Talkable : MonoBehaviour
         {
             Debug.LogError("Character: " + gameObject.name + " has empty dialogue file");
         }
-        
+
         currentLine = 0;
+        int langNum = (int)Singleton.Instance.LocalizationManager.Language;
+        for (int i = 0; langNum > 0; i++)
+        {
+            if (currentLine >= lines.Length)
+            {
+                Debug.LogError("Have not found language №: " + langNum + " for dialogue: " + gameObject.name);
+                currentLine = 0;
+                break;
+            }
+            
+            if (lines[currentLine].Length == 0)
+            {
+                langNum--;
+            }
+            currentLine++;
+        }
+        
         text = Singleton.Instance.DialogueData.Text;
     }
-
+    
+    // Ends dialogue when current line is empty (for localization purposes)
     protected bool TryDisplayCurrentLine()
     {
-        if (currentLine >= lines.Length)
+        if (currentLine >= lines.Length || lines[currentLine].Length == 0)
         {
             HideDialogue();
             return false;
