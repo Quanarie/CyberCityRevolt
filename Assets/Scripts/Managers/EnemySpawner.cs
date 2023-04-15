@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     [HideInInspector] public UnityEvent StageChanged;
     [HideInInspector] public List<GameObject> EnemiesActive;
     
-    private GameObject[] stagesContainers;
+    [SerializeField] private GameObject[] stagesContainers;
 
     private int currentStageNumber = 0;
     private int amountOfSpawnedEnemiesCurrStage = 0;
@@ -17,8 +16,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        stagesContainers = GameObject.FindGameObjectsWithTag("Stage");
-        
         foreach (GameObject stage in stagesContainers)
         {
             for (int i = 0; i < stage.transform.childCount; i++)
@@ -27,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
+        if (stagesContainers.Length == 0) return;
         SpawnEnemies(stagesContainers[0]);
     }
 

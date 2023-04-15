@@ -332,6 +332,7 @@ MonoBehaviour:
   route: {fileID: 8572193104717666741}
   minWaitOnPointTime: 0.2
   maxWaitOnPointTime: 1
+  timeToChangeEnemyToGoAwayFrom: 1
 --- !u!114 &7051517924252546909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +379,7 @@ MonoBehaviour:
   Shoot:
     m_PersistentCalls:
       m_Calls: []
-  <WeaponOffset>k__BackingField: {x: 0, y: 0}
+  <WeaponOffset>k__BackingField: {x: 0.16, y: 0.16}
 --- !u!1 &8495988583448099185
 GameObject:
   m_ObjectHideFlags: 0

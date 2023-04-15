@@ -90,6 +90,7 @@ public abstract class Weapon : MonoBehaviour
         float targetRelative = whereToAim.x - thisTransform.position.x;
         if (parentScale.x > 0 && targetRelative < 0)
         {
+            
             transform.localScale = new Vector3(-Mathf.Abs(weaponScale.x), weaponScale.y, weaponScale.z);
         }
         else if (parentScale.x < 0 && targetRelative > 0)
