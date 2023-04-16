@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 
 /// <summary>
@@ -19,8 +18,7 @@ public class Singleton : MonoBehaviour
     public StateManager StateManager { get; private set; }
     public NpcManager NpcManager { get; private set; }
     public BulletManager BulletManager { get; private set; }
-    public LocalizationManager LocalizationManager { get; private set; }
-
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,7 +31,6 @@ public class Singleton : MonoBehaviour
         StateManager = gameObject.AddComponent<StateManager>();
         NpcManager = gameObject.AddComponent<NpcManager>();
         BulletManager = gameObject.AddComponent<BulletManager>();
-        LocalizationManager = gameObject.AddComponent<LocalizationManager>();
 
         PlayerData = GetComponentInChildren<PlayerData>();
         DialogueData = GetComponentInChildren<DialogueData>();

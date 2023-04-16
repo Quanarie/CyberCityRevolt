@@ -29,7 +29,7 @@ public abstract class Talkable : MonoBehaviour
         }
 
         currentLine = 0;
-        int langNum = (int)Singleton.Instance.LocalizationManager.Language;
+        int langNum = PlayerPrefs.GetInt("Language");
         for (int i = 0; langNum > 0; i++)
         {
             if (currentLine >= lines.Length)
