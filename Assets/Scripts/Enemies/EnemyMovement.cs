@@ -51,7 +51,7 @@ public class EnemyMovement : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(plPos, transform.position);
 
-        if (distanceToPlayer > info.TriggerDistance)
+        if (distanceToPlayer > info.TriggerDistance || info.IsThereObstacleBetweenMeAndPlayer())
         {
             MoveOnRoute();
         }
@@ -66,7 +66,7 @@ public class EnemyMovement : MonoBehaviour
 
         elapsedSinceEnemyToGoAwayFromChange += Time.fixedDeltaTime;
     }
-    
+
     private void MoveOnRoute()
     {
         if (route == null)

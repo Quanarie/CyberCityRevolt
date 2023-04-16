@@ -17,7 +17,7 @@ public class PlayerWeaponHandler : MonoBehaviour
     }
     public static void RemoveWeapon(Weapon toRemove) => weaponsOnFloor.Remove(toRemove);
     
-    private const float PICKUP_DISTANCE = 0.5f;
+    private const float PICKUP_DISTANCE = 0.75f;
 
     private void Start()
     {

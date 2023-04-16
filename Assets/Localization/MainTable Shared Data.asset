@@ -39,6 +39,34 @@ MonoBehaviour:
     m_Key: MenuButton
     m_Metadata:
       m_Items: []
+  - m_Id: 30482170372096
+    m_Key: ExitFromDialogue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32849703985152
+    m_Key: WeaponName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32898471157760
+    m_Key: WeaponRechargeTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33064288772096
+    m_Key: WeaponDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33243947589632
+    m_Key: BulletSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33332539678720
+    m_Key: BulletAmount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33846404833280
+    m_Key: WeaponPickup
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -42,6 +42,34 @@ MonoBehaviour:
     m_Localized: MENU
     m_Metadata:
       m_Items: []
+  - m_Id: 30482170372096
+    m_Localized: PRESS Q TO CLOSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32849703985152
+    m_Localized: NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32898471157760
+    m_Localized: RECHARGE TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33064288772096
+    m_Localized: DAMAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33243947589632
+    m_Localized: BULLET SPEED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33332539678720
+    m_Localized: BULLETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33846404833280
+    m_Localized: PRESS E TO PICK UP
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -19,7 +19,8 @@ public class EnemyWeaponInput : WeaponInput
     {
         Vector3 plPos = playerTransform.position;
 
-        if (Vector3.Distance(plPos, transform.position) > info.TriggerDistance) return;
+        if (Vector3.Distance(plPos, transform.position) > info.TriggerDistance 
+            || info.IsThereObstacleBetweenMeAndPlayer()) return;
         target = plPos;
         Shoot?.Invoke(target);
     }

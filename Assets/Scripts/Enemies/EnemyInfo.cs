@@ -9,8 +9,8 @@ public class EnemyInfo : MonoBehaviour
 
     public bool IsThereObstacleBetweenMeAndPlayer()
     {
-        var plPos = Singleton.Instance.PlayerData.Player.transform.position;
-        var enemyPos = transform.position;
+        Vector3 plPos = Singleton.Instance.PlayerData.Player.transform.position;
+        Vector3 enemyPos = transform.position;
         
         foreach (var hit in Physics2D.RaycastAll(enemyPos, plPos - enemyPos))
         {
@@ -18,7 +18,7 @@ public class EnemyInfo : MonoBehaviour
             {
                 return true;
             }
-            else if (hit.collider.gameObject == Singleton.Instance.PlayerData.Player)
+            if (hit.collider.gameObject == Singleton.Instance.PlayerData.Player)
             {
                 return false;
             }
